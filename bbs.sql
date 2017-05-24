@@ -18,18 +18,18 @@
 --
 -- Table structure for table `comment`
 --
-
+USE bbs;
 DROP TABLE IF EXISTS `comment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `comment` (
-  `comment_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `comment_user` bigint(20) NOT NULL,
-  `invitation` bigint(20) NOT NULL,
-  `answer_user` bigint(20) NOT NULL,
-  `content` varchar(100) NOT NULL,
+  `comment_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `comment_user` BIGINT(20) NOT NULL,
+  `invitation` BIGINT(20) NOT NULL,
+  `answer_user` BIGINT(20) NOT NULL,
+  `content` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`comment_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,14 +49,14 @@ DROP TABLE IF EXISTS `invitation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `invitation` (
-  `invitation_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `author` bigint(20) NOT NULL,
-  `title` varchar(100) NOT NULL,
-  `is_essence` tinyint(1) NOT NULL DEFAULT '0',
-  `type` varchar(20) NOT NULL DEFAULT 'skill',
-  `content` varchar(200) DEFAULT NULL,
+  `invitation_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `author` BIGINT(20) NOT NULL,
+  `title` VARCHAR(100) NOT NULL,
+  `is_essence` TINYINT(1) NOT NULL DEFAULT '0',
+  `type` VARCHAR(20) NOT NULL DEFAULT 'skill',
+  `content` VARCHAR(200) DEFAULT NULL,
   PRIMARY KEY (`invitation_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,10 +76,10 @@ DROP TABLE IF EXISTS `invitation_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `invitation_type` (
-  `name` varchar(20) NOT NULL,
+  `name` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`name`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,12 +100,12 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) NOT NULL,
-  `sex` tinyint(4) NOT NULL,
-  `is_admin` tinyint(1) DEFAULT '0',
+  `user_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(20) NOT NULL,
+  `sex` TINYINT(4) NOT NULL,
+  `is_admin` TINYINT(1) DEFAULT '0',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
