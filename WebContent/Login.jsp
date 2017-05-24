@@ -13,7 +13,6 @@ String userIsDeleMsg = (String)request.getSession().getAttribute("userIsDeleMsg"
          <a class="navbar-brand" href="${pageContext.request.contextPath }/index.jsp">BBS</a>
        </div>
 
-       <!-- Collect the nav links, forms, and other content for toggling -->
        <div class="collapse navbar-collapse navbar-ex1-collapse">
          <ul class="nav navbar-nav">
            <li><a href="${pageContext.request.contextPath}/index.jsp">BBS首页</a></li>

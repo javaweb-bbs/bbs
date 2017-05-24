@@ -6,4 +6,3 @@ out/*
 .settings/
 bin/*
 bin/src/*
-WebContent/bootstrap/*
