@@ -5,7 +5,11 @@
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
-  	<servlet-name>loginServlet</servlet-name>
-  	<servlet-class>bbs.web.LoginServlet</servlet-class>
+  	<servlet-name>listServlet</servlet-name>
+  	<servlet-class>bbs.serivce.invitationService</servlet-class>
   </servlet>
+    <servlet-mapping>
+        <servlet-name>listServlet</servlet-name>
+        <url-pattern>/list</url-pattern>
+    </servlet-mapping>
 </web-app>

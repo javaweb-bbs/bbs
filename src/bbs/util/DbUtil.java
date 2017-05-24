@@ -2,22 +2,20 @@ package bbs.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-/*
- * ÀàµÄ±¸×¢
- * Êı¾İ¿â¹¤¾ßÀà
- */
 public class DbUtil {
 	private String dbUrl="jdbc:mysql://localhost:3306/bbs";
-	private String dbUserName="root";//ÓÃ»§Ãû
-	private String dbPasssword="1972886479";//ÃÜÂë
+	private String dbUserName="root";//ï¿½Ã»ï¿½ï¿½ï¿½
+	private String dbPasssword="sjf978977";//ï¿½ï¿½ï¿½ï¿½
 	private String jdbcName="com.mysql.jdbc.Driver";
-	//»ñÈ¡Êı¾İ¿âÁ¬½Ó
+
+	//	é“¾æ¥æ•°æ®åº“
 	public Connection getCon()throws Exception{
 		Class.forName(jdbcName);
 		Connection con=DriverManager.getConnection(dbUrl,dbUserName,dbPasssword);
 		return con;
 	}
-	//¹Ø±ÕÊı¾İ¿âÁ¬½Ó
+
+	// å…³é—­æ•°æ®åº“é“¾æ¥
 	public void closeCon(Connection con)throws Exception{
 		if(con!=null){
 			con.close();
@@ -27,10 +25,10 @@ public class DbUtil {
 		DbUtil dbutil = new DbUtil();
 		try {
 			dbutil.getCon();
-			System.out.println("Êı¾İ¿âÁ¬½Ó³É¹¦");
+			System.out.println("é“¾æ¥æ•°æ®åº“æˆåŠŸ");
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Êı¾İ¿âÁ¬½ÓÊ§°Ü");
+			System.out.println("é“¾æ¥æ•°æ®åº“å¤±è´¥");
 		}
 	}
 }
