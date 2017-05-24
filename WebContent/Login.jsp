@@ -1,9 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 
-<%
-String errorMsg = (String)request.getSession().getAttribute("msg");
-String userIsDeleMsg = (String)request.getSession().getAttribute("userIsDeleMsg");
-%>
 <jsp:include page="frame/Header.jsp"></jsp:include>
 
 <body>
@@ -25,26 +21,6 @@ String userIsDeleMsg = (String)request.getSession().getAttribute("userIsDeleMsg"
        </div>
      </div>
    </nav>
-
-			    
-    <% if (null != errorMsg) { %>		<%-- 登录验证失败提示信息 --%>
-    <div class="container">
-	    <div class="alert alert-error">
-	    	<font color="red"><%=errorMsg %></font>
-	    </div>
-    </div>
-    <%    request.getSession().removeAttribute("msg");
-    } %>
-
-				    
-    <% if (null != userIsDeleMsg) { %>   <%-- 用户被禁用提示信息 --%>
-    <div class="container">
-	    <div class="alert alert-error">
-	   		<font color="red"><%=userIsDeleMsg %></font>
-	    </div>
-	</div>
-    <%    request.getSession().removeAttribute("userIsDeleMsg");
-    } %>
 
 	<div class="container">
 		<div class="row col-md-6">
@@ -69,23 +45,12 @@ String userIsDeleMsg = (String)request.getSession().getAttribute("userIsDeleMsg"
 					<div class="form-group">
 					<button type="submit" class="btn btn-success">登录</button>
 					</div>
+					<div class="form-group">
+						<font color="red">${error }</font>
+					</div>
 				</fieldset>
 			</form>
 		</div>
 	</div>
 
 	<jsp:include page="frame/Footer.jsp"></jsp:include>
-
-<script type="text/javascript">
-function isValidate(login_form) {
-	var username = login_form.username.value;
-	var password = login_form.password.value;
-	
-	if (username == "" || password == "") {
-		alert("请填写用户名和密码！");	
-		
-		return false;
-	}
-	return true;
-}
-</script>

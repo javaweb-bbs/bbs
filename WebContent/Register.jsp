@@ -17,7 +17,7 @@ String existMsg = (String)request.getSession().getAttribute("existMsg");
 
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="${pageContext.request.contextPath }/index.html">BBS首页</a></li>
+					<li><a href="${pageContext.request.contextPath }/index.jsp">BBS首页</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
@@ -65,22 +65,18 @@ String existMsg = (String)request.getSession().getAttribute("existMsg");
 						<legend class="caption">注册</legend>
 					</div>
 					<div class="form-group">
-						<!-- Username -->
 						<label for="username">用户名</label>
 						<input type="text" id="username" name="username" placeholder="请输入用户名" class="form-control">					
 					</div>
 					<div class="form-group">
-						<!-- E-mail -->
 						<label  for="email">E-mail</label>
 						<input type="text" id="email" name="email" placeholder="请输入邮箱地址" class="form-control">						
 					</div>
 					<div class="form-group">
-						<!-- Password-->
 						<label class="control-label" for="password">密码</label>						
 						<input type="password" id="password" name="password" placeholder="请输入密码" class="form-control">
 					</div>
 					<div class="form-group">
-						<!-- Password -->
 						<label class="control-label" for="password_confirm">密码（确认）</label>
 						<input type="password" id="password_confirm" name="password_confirm" placeholder="请再次输入密码" class="form-control">
 					</div>

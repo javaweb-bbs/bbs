@@ -8,7 +8,7 @@ import bbs.model.User;
 public class UserDao {
 
 	/**
-	 * 登录
+	 * 前台登录
 	 * @param con
 	 * @param user
 	 * @return
@@ -26,7 +26,7 @@ public class UserDao {
 			resultUser=new User();
 			resultUser.setUserName(rs.getString("userName"));
 			resultUser.setPassWord(rs.getString("password"));
-			resultUser.setIsAdmin(rs.getInt("is_admin"));
+			resultUser.setIsAdmin(0);
 		}
 		return resultUser;
 	}

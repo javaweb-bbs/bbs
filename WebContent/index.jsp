@@ -1,6 +1,8 @@
-<%@ page language="java" import="java.util.*" import="cap.bean.*" import="cap.dao.impl.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*" import="bbs.model.*" import="bbs.dao.*" pageEncoding="utf-8"%>
 <jsp:include page="frame/Header.jsp"></jsp:include>
-
+<%
+	User u=(User)request.getSession().getAttribute("currentUser");
+%>
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
@@ -12,42 +14,50 @@
           <ul class="nav navbar-nav">
             <li><a href="${pageContext.request.contextPath}/index.jsp">BBS首页</a></li>
           </ul>
-          <!-- <ul class="nav navbar-nav">
+          <%
+              if (null != u) {
+          %>
+          <ul class="nav navbar-nav">
             <li><a href="">我的BBS</a></li>
           </ul>
-          
           <ul class="nav navbar-nav">
-            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">BBS管理<b class="caret"></b></a>
+            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">板块管理<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href=""><i class="glyphicon glyphicon-cog"></i> 博文管理</a></li>
+                    <li><a href=""><i class="glyphicon glyphicon-cog"></i> 帖子管理</a></li>
                     <li class="divider"></li>
                     <li><a href=""><i class="glyphicon glyphicon-cog"></i> 分类管理</a></li>
                     <li class="divider"></li>
                     <li><a href=""><i class="glyphicon glyphicon-cog"></i> 评论管理</a></li>
                 </ul>
             </li>
-          </ul> -->
-          
+          </ul>
+          <%
+          	}
+          	if(u==null){
+          %>
           <ul class="nav navbar-nav navbar-right">
-          	<li><a href="Login.jsp" target="_blank">登录</a></li>
+          	<li><a href="Login.jsp">登录</a></li>
           	<li><a href="Register.jsp" target="_blank">注册</a></li>
           </ul>
-      
-          <!-- <div class="pull-right">
-                <ul class="nav pull-right">
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">欢迎，<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href=""><i class="glyphicon glyphicon-cog"></i> 编辑个人信息</a></li>
-                           
-                            <li class="divider"></li>
-                            <li><a href=""><i class="glyphicon glyphicon-cog"></i> 编辑BBS信息</a></li>
-                          
-                            <li class="divider"></li>
-                            <li><a href="user?action=logout"><i class="glyphicon glyphicon-off"></i> 登出</a></li>
-                        </ul>
-                    </li>
-                </ul>
-          </div> -->
+      	<%
+          	}else{
+      	%>
+         <div class="pull-right">
+             <ul class="nav pull-right">
+                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">欢迎，<%=u.getUserName() %><b class="caret"></b></a>
+                     <ul class="dropdown-menu">
+                         <li><a href=""><i class="glyphicon glyphicon-cog"></i> 编辑个人信息</a></li>
+                           <li class="divider"></li>
+                           <li><a href=""><i class="glyphicon glyphicon-cog"></i> 编辑BBS信息</a></li>
+                           <li class="divider"></li>
+                           <li><a href="user?action=logout"><i class="glyphicon glyphicon-off"></i> 登出</a></li>
+                       </ul>
+                   </li>
+              </ul>
+          </div>
+          <%
+          	}
+          %>
         </div>
       </div>
     </nav>
@@ -56,7 +66,7 @@
 
       <div class="row">
         <div id="blog" class="col-lg-8" >
-          <h1><a href="user?action=index">BBS论坛——<small>基于JSP, Servlet技术构建</small></a></h1>
+          <h1><a href="index.jsp">BBS论坛——<small>基于JSP, Servlet技术构建</small></a></h1>
           <br>
  		  <h3><a href="" target="_blank"></a></h3>
           <!-- <p>
