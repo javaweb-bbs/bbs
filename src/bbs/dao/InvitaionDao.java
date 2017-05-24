@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  * Created by sjf on 5/24/17.
@@ -40,4 +39,55 @@ public class InvitaionDao {
         }
         return result;
     }
+
+    public static JSONObject detail(Connection con, int invitationId) {
+        JSONObject result = new JSONObject();
+        String search = "select * from invitation where invitation_id = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(search);
+            ps.setInt((int)1, invitationId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Invitation invitation = new Invitation();
+                invitation.setAuthor(rs.getInt("author"));
+                invitation.setInvitationId(rs.getInt("invitation_id"));
+                invitation.setTitle(rs.getString("title"));
+                invitation.setContent(rs.getString("content"));
+                invitation.setType(rs.getString("type"));
+                invitation.setEssence(rs.getBoolean("is_essence"));
+                result = new JSONObject(invitation);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static JSONObject add(Connection con, Invitation invitation) {
+        JSONObject result = new JSONObject();
+        String message = "insert into invitation (author, title, is_essence, type, content) values (?, ?, ?, ?, ?)";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(message);
+            ps.setInt((int) 1, invitation.getAuthor());
+            ps.setString((int) 2, invitation.getTitle());
+            ps.setBoolean((int) 3, invitation.getEssence());
+            ps.setString((int) 4, invitation.getType());
+            ps.setString((int) 5, invitation.getContent());
+            int num = ps.executeUpdate();
+            if (num == 0) {
+                result.put("status", "Fail");
+            } else {
+                result.put("status", "OK");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+//    public static JSONObject updateEssence(Connection con, Boolean isEssence) {
+//        JSONObject result = new JSONObject();
+//        String message = "update "
+//    }
 }
