@@ -14,6 +14,7 @@ import java.sql.SQLException;
  * Created by sjf on 5/24/17.
  */
 public class commentDao {
+    // 获取评论列表
     public static JSONArray list(Connection con, int invitationId) {
         JSONArray result = new JSONArray();
         String search = "select * from comment where invitation = ?";
@@ -37,6 +38,7 @@ public class commentDao {
         return result;
     }
 
+    // 添加评论
     public static JSONObject add(Connection con, Comment comment) {
         JSONObject result = new JSONObject();
         String message = "insert into comment (comment_user, invitation, answer_user, content) values (?, ?, ?, ?)";
@@ -49,12 +51,37 @@ public class commentDao {
             ps.setString((int) 4, comment.getContent());
             int num = ps.executeUpdate();
             if(num == 0) {
-                result.put("status", "Failer");
+                result.put("status", "add fail");
             } else {
-                result.put("status", "OK");
+                result.put("status", "add success");
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return result;
+    }
+
+    // 删除评论
+    public static JSONObject delete(Connection con, int commentId, int invitationId) throws SQLException {
+        JSONObject result = new JSONObject();
+        String deleteManyComment = "delete from comment where invitation = ?";
+        String deleteSingleComment = "delete from comment where comment_id = ?";
+        int num = 0;
+
+        if (invitationId == 0) {
+            PreparedStatement singlePs = con.prepareStatement(deleteSingleComment);
+            singlePs.setInt((int) 1, commentId);
+            num = singlePs.executeUpdate();
+        } else {
+            PreparedStatement manyPs = con.prepareStatement(deleteManyComment);
+            manyPs.setInt((int) 1, invitationId);
+            num = manyPs.executeUpdate();
+        }
+
+        if (num == 0) {
+            result.put("status", "delete fail");
+        } else {
+            result.put("status", "delete success");
         }
         return result;
     }

@@ -13,6 +13,7 @@ import java.sql.SQLException;
  * Created by sjf on 5/24/17.
  */
 public class InvitaionDao {
+    // 获取帖子列表
     public static JSONArray list (Connection con, int pageNum, int pageSize) {
         JSONArray result = new JSONArray();
         String search = "select *, (select count(*) from invitation) as total from invitation limit ?,?";
@@ -39,7 +40,7 @@ public class InvitaionDao {
         }
         return result;
     }
-
+    // 获取帖子详情
     public static JSONObject detail(Connection con, int invitationId) {
         JSONObject result = new JSONObject();
         String search = "select * from invitation where invitation_id = ?";
@@ -63,6 +64,7 @@ public class InvitaionDao {
         return result;
     }
 
+    // 添加帖子
     public static JSONObject add(Connection con, Invitation invitation) {
         JSONObject result = new JSONObject();
         String message = "insert into invitation (author, title, is_essence, type, content) values (?, ?, ?, ?, ?)";
@@ -86,8 +88,44 @@ public class InvitaionDao {
         return result;
     }
 
-//    public static JSONObject updateEssence(Connection con, Boolean isEssence) {
-//        JSONObject result = new JSONObject();
-//        String message = "update "
-//    }
+    // 设置精华帖
+    public static JSONObject updateEssence(Connection con, Boolean isEssence) {
+        JSONObject result = new JSONObject();
+        String message = "update invitation set is_essence = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(message);
+            ps.setBoolean((int) 1, isEssence);
+            int num = ps.executeUpdate();
+            if (num == 0) {
+                result.put("status", "Fail");
+            } else {
+                result.put("status", "OK");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    // 删除帖子
+    public static JSONObject deleteEssence(Connection con, int invitationId) {
+        JSONObject result = new JSONObject();
+        String deleteInvitation = "delete from invitation where invitation_id = ?";
+
+        PreparedStatement invitationPs = null;
+        try {
+            invitationPs = con.prepareStatement(deleteInvitation);
+            invitationPs.setInt((int) 1, invitationId);
+            int num = invitationPs.executeUpdate();
+            if (num == 0) {
+                result.put("status", "delete fail");
+            } else {
+                JSONObject deleteComment =  commentDao.delete(con, 0, invitationId);
+                result.put("status", "delete success");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
