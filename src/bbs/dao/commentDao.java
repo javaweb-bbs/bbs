@@ -22,13 +22,13 @@ public class commentDao {
             PreparedStatement ps = con.prepareStatement(search);
             ps.setInt((int) 1, invitationId);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 Comment comment = new Comment();
                 comment.setCommentId(rs.getInt("comment_id"));
                 comment.setCommentUser(rs.getInt("comment_user"));
                 comment.setInvitation(invitationId);
                 comment.setContent(rs.getString("content"));
-                comment.setAnswerUser(rs.getInt("answerUser"));
+                comment.setAnswerUser(rs.getInt("answer_user"));
                 result.put(new JSONObject(comment));
             }
         } catch (SQLException e) {

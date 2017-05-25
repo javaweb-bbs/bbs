@@ -147,10 +147,8 @@
             xhr.send(params);
         }
 
-        ajax("GET", "invitation?pageNum=1", null)
-        ajax("POST", "invitation", JSON.stringify({
-            invitationId: 2,
-            isEssence: false
+        ajax("DELETE", "comment", JSON.stringify({
+            commentId: 1
         }))
     </script>
     

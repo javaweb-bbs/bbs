@@ -27,6 +27,7 @@ public class invitationService extends HttpServlet {
 
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
         try {
             PrintWriter out = res.getWriter();
             if (req.getParameter("invitationId") != null) {
@@ -54,6 +55,7 @@ public class invitationService extends HttpServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
         try {
             JSONObject params = getParams.get(req);
             Boolean isEssence = params.getBoolean("isEssence");
@@ -68,6 +70,7 @@ public class invitationService extends HttpServlet {
 
     public void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
         try {
             JSONObject params = getParams.get(req);
             Invitation newInvitation = new Invitation();
@@ -86,6 +89,7 @@ public class invitationService extends HttpServlet {
 
     public void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
         try {
             JSONObject params = getParams.get(req);
             int invitationId = params.getInt("invitationId");
