@@ -12,7 +12,7 @@ function renderList(data) {
                 + '<p><i class="glyphicon glyphicon-user"></i><a href="" target="_blank">'
                 + data.invitations[i].author + '</a><i class="glyphicon glyphicon-calendar"></i>'
                 + data.invitations[i].dateCreate + '</p><p>' + data.invitations[i].content + '</p><br>'
-                + '<a class="btn btn-primary" href="">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>'
+                + '<a class="btn btn-primary" href="Post.jsp">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>'
             listItem.innerHTML = html;
             list.appendChild(listItem);
         }

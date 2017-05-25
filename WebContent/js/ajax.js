@@ -3,7 +3,7 @@
  */
 function ajax(type, url, params, cb) {
     var xhr = new XMLHttpRequest();
-    xhr.open(type, "/WebContent/" + url);
+    xhr.open(type, "/WebContext/" + url);
     xhr.setRequestHeader("content-type", "application/json");
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {

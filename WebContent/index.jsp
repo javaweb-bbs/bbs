@@ -23,11 +23,11 @@
           <ul class="nav navbar-nav">
             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">板块管理<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href="${pageContext.request.contextPath }/invitation?action=imanage"><i class="glyphicon glyphicon-cog"></i> 帖子管理</a></li>
+                    <li><a href="invitationManage.jsp"><i class="glyphicon glyphicon-cog"></i> 帖子管理</a></li>
                     <li class="divider"></li>
-                    <li><a href="${pageContext.request.contextPath }/invitationtype?action=itmanage"><i class="glyphicon glyphicon-cog"></i> 分类管理</a></li>
+                    <li><a href="TypeManage.jsp"><i class="glyphicon glyphicon-cog"></i> 分类管理</a></li>
                     <li class="divider"></li>
-                    <li><a href=""><i class="glyphicon glyphicon-cog"></i> 评论管理</a></li>
+                    <li><a href="CommentManage.jsp"><i class="glyphicon glyphicon-cog"></i> 评论管理</a></li>
                 </ul>
             </li>
           </ul>

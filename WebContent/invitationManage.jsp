@@ -36,11 +36,11 @@ String deleErrorMsg = (String)request.getSession().getAttribute("deleErrorMsg");
           <ul class="nav navbar-nav">
             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">板块管理<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href=""><i class="glyphicon glyphicon-cog"></i> 帖子管理</a></li>
+                    <li><a href="invitationManage.jsp"><i class="glyphicon glyphicon-cog"></i> 帖子管理</a></li>
                     <li class="divider"></li>
-                    <li><a href=""><i class="glyphicon glyphicon-cog"></i> 分类管理</a></li>
+                    <li><a href="TypeManage.jsp"><i class="glyphicon glyphicon-cog"></i> 分类管理</a></li>
                     <li class="divider"></li>
-                    <li><a href=""><i class="glyphicon glyphicon-cog"></i> 评论管理</a></li>
+                    <li><a href="CommentManage.jsp"><i class="glyphicon glyphicon-cog"></i> 评论管理</a></li>
                 </ul>
             </li>
           </ul>
@@ -77,8 +77,7 @@ String deleErrorMsg = (String)request.getSession().getAttribute("deleErrorMsg");
 
 	<div class="container">
 		<div class="btn-toolbar">
-			<a class="btn btn-primary"
-				href="">新建帖子</a>
+			<a class="btn btn-primary" href="addInvitation.jsp">新建帖子</a>
 		</div>
 		<div class="well">
 			<table class="table">
