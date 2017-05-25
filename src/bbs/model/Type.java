@@ -6,6 +6,10 @@ package bbs.model;
 public class Type {
     private String name;
 
+    public Type() {
+        super();
+    }
+
     public Type(String name) {
         super();
         this.name = name;

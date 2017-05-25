@@ -10,6 +10,10 @@ public class Comment {
     private int answerUser;
     private String content;
 
+    public Comment() {
+        super();
+    }
+
     public Comment(int commentUser, int invitation, int answerUser, String content) {
         super();
         this.commentUser = commentUser;

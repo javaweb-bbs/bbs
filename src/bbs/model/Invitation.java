@@ -14,6 +14,10 @@ public class Invitation {
     private String type;
     private Date dateCreate;
 
+    public Invitation() {
+        super();
+    }
+
     public Invitation(String title, String content, Boolean isEssence, String type, int author) {
         super();
         this.title = title;
