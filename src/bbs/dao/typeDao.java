@@ -18,7 +18,7 @@ public class typeDao {
         try {
             PreparedStatement ps = con.prepareStatement(search);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 result.put(rs.getString("name"));
             }
         } catch (SQLException e) {
@@ -40,6 +40,26 @@ public class typeDao {
                 result.put("status", "add failer");
             } else {
                 result.put("status", "add success");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static JSONObject delete(Connection con, String type) {
+        JSONObject result = new JSONObject();
+        String deleteType = "delete from invitation_type where name = ?";
+
+        PreparedStatement typePs = null;
+        try {
+            typePs = con.prepareStatement(deleteType);
+            typePs.setString((int) 1, type);
+            int num = typePs.executeUpdate();
+            if (num == 0) {
+                result.put("status", "delete fail");
+            } else {
+                result.put("status", "delete success");
             }
         } catch (SQLException e) {
             e.printStackTrace();

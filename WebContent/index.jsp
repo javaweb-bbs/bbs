@@ -147,8 +147,8 @@
             xhr.send(params);
         }
 
-        ajax("DELETE", "comment", JSON.stringify({
-            commentId: 1
+        ajax("DELETE", "type", JSON.stringify({
+            name: "love"
         }))
     </script>
     
