@@ -67,7 +67,6 @@
         <div id="blog" class="col-lg-8" >
           <h1><a href="index.jsp">BBS论坛——<small>基于JSP, Servlet技术构建</small></a></h1>
           <br>
-<<<<<<< HEAD
  		  <h3><a href="" target="_blank">java学习</a></h3>
           <p>
           <i class="glyphicon glyphicon-user"></i> 
@@ -77,10 +76,6 @@
  		  </p>
           
           <p>学习java学习学习学习学习学习</p><br>
-=======
- 		  <h3><a href="" target="_blank"></a></h3>
-          <p></p><br>
->>>>>>> b0ce967299ea074fa6bcc240739d97f76fd383fc
           <a class="btn btn-primary" href="">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>               
           <hr>
           <ul class="pager">
@@ -100,7 +95,6 @@
             </div>
             </form>
           </div>
-          <form action="servlet/GetSysCategoryServlet" method="GET">
           <div class="well">
             <h4>帖子分类</h4>
               <div class="row">
@@ -114,7 +108,6 @@
                 </div>
               </div>
           </div>
-          </form>
           <div class="well">
             <h4>本周活跃版主</h4>
             <div class="row">
@@ -138,15 +131,6 @@
     </div>
 
     <script>
-//      var xhr = new XMLHttpRequest();
-//      xhr.open("GET", "/WebContent/invitation?pageSize=1&pageNum=1");
-//      xhr.setRequestHeader("content-type", "application/json;charset=utf-8");
-//      xhr.onreadystatechange = function () {
-//          if (xhr.readyState == 4 && xhr.status == 200) {
-//              console.log(xhr.responseText);
-//          }
-//      }
-//      xhr.send();
         function ajax(type, url, params) {
             var xhr = new XMLHttpRequest();
             xhr.open(type, "/WebContent/" + url);
