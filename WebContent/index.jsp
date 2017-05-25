@@ -136,7 +136,7 @@
 //      }
 //      xhr.send();
         var xhr = new XMLHttpRequest();
-        xhr.open("PUT", "/WebContent/invitation");
+        xhr.open("DELETE", "/WebContent/invitation");
         xhr.setRequestHeader("content-type", "application/json");
         xhr.onreadystatechange = function () {
           if (xhr.readyState == 4 && xhr.status == 200) {
@@ -144,11 +144,7 @@
           }
         }
         xhr.send(JSON.stringify({
-            author: 1,
-            title: 'sujunfei love jinjingjing',
-            content: 'this is true',
-            isEssence: true,
-            type: 'love'
+            invitationId: 1
         }));
     </script>
     

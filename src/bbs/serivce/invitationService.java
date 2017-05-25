@@ -44,7 +44,7 @@ public class invitationService extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        res.setContentType("application/json; charset=utf-8");
+        res.setContentType("application/json");
         try {
             int pageNum = Integer.parseInt(req.getParameter("pageNum"));
             int pageSize = Integer.parseInt(req.getParameter("pageSize"));
@@ -57,7 +57,7 @@ public class invitationService extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        res.setContentType("application/json;charset=utf-8");
+        res.setContentType("application/json");
         try {
             JSONObject params = getParams(req);
             Boolean isEssence = params.getBoolean("isEssence");
@@ -83,6 +83,19 @@ public class invitationService extends HttpServlet {
             JSONObject addResult = InvitaionDao.add(con, newInvitation);
             PrintWriter out = res.getWriter();
             out.print(addResult);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        res.setContentType("application/json");
+        try {
+            JSONObject params = getParams(req);
+            int invitationId = params.getInt("invitationId");
+            JSONObject deleteResult = InvitaionDao.delete(con, invitationId);
+            PrintWriter out = res.getWriter();
+            out.print(deleteResult);
         } catch (Exception e) {
             e.printStackTrace();
         }

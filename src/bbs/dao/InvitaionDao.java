@@ -110,7 +110,7 @@ public class InvitaionDao {
     }
 
     // 删除帖子
-    public static JSONObject deleteEssence(Connection con, int invitationId) {
+    public static JSONObject delete(Connection con, int invitationId) {
         JSONObject result = new JSONObject();
         String deleteInvitation = "delete from invitation where invitation_id = ?";
 
