@@ -63,11 +63,11 @@
     </nav>
 
     <div class="container">
-
       <div class="row">
         <div id="blog" class="col-lg-8" >
           <h1><a href="index.jsp">BBS论坛——<small>基于JSP, Servlet技术构建</small></a></h1>
           <br>
+<<<<<<< HEAD
  		  <h3><a href="" target="_blank">java学习</a></h3>
           <p>
           <i class="glyphicon glyphicon-user"></i> 
@@ -77,39 +77,18 @@
  		  </p>
           
           <p>学习java学习学习学习学习学习</p><br>
+=======
+ 		  <h3><a href="" target="_blank"></a></h3>
+          <p></p><br>
+>>>>>>> b0ce967299ea074fa6bcc240739d97f76fd383fc
           <a class="btn btn-primary" href="">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>               
           <hr>
-          
-          
-          <!-- <p>还没有写过文章哦，赶紧写吧~</p> -->
-          
-          
-          <!-- pager -->
           <ul class="pager">
-          	
             <li class="previous"><a href="">&larr; 上一页</a></li>
-            
-            
-            
             <li class="next"><a href="">下一页  &rarr;</a></li>
-           
           </ul>
-
         </div>
-        
         <div class="col-lg-4">
-      
-          <!-- <div class="well" align="center">
-          	<a class="btn btn-primary" href="" target="_blank">申请个人BBS</a>
-          </div> -->
-       
-        
-       
-          <!-- <div class="well" align="center">
-          	<a class="btn btn-primary" href="">进入我的板块</a>
-          </div> -->
-       
-        
           <div class="well">
             <h4>搜索站内帖子</h4>
             <form name="search_form" action="" method="post">
@@ -118,62 +97,71 @@
               <span class="input-group-btn">
                 <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
               </span>
-            </div><!-- /input-group -->
+            </div>
             </form>
-          </div><!-- /well -->
-          
+          </div>
           <form action="servlet/GetSysCategoryServlet" method="GET">
           <div class="well">
             <h4>帖子分类</h4>
               <div class="row">
                 <div class="col-lg-6">
                   <ul class="list-unstyled">
-                    
                     <li>
-                    <a href="#"></a>                  
+                      <a href="#"></a>
                     </li>
-                   
                     <li>无分类</li>
-                   
                   </ul>
                 </div>
               </div>
-          </div><!-- /well -->
-          </form> 
-          
+          </div>
+          </form>
           <div class="well">
             <h4>本周活跃版主</h4>
             <div class="row">
-                <div class="">
-                  <ul class="list-unstyled">
-                    
-                    <li><a href="" target="_blank"></a></li>
-                    
-                    <li>暂无排名，sorry......
-                    </li>
-                   
-                  </ul>
-                </div>
-              </div>
-          </div><!-- /well -->
-          
+              <ul class="list-unstyled">
+                <li><a href="" target="_blank"></a></li>
+                <li>暂无排名，sorry......</li>
+              </ul>
+            </div>
+          </div>
           <div class="well">
             <h4>精华TOP10</h4>
             <div class="row">
-                <div class="">
-                  <ul class="list-unstyled">
-                    
-                    <li><a href="" target="_blank"></a></li>
-                    
-                    <li>暂无排名，sorry......
-                    </li>
-                    
-                  </ul>
-                </div>
-              </div>
-          </div><!-- /well -->
-        </div>
+              <ul class="list-unstyled">
+                <li><a href="" target="_blank"></a></li>
+                <li>暂无排名，sorry......</li>
+              </ul>
+            </div>
+          </div>
+          </div>
       </div>
-    </div><!-- /.container -->
+    </div>
+
+    <script>
+//      var xhr = new XMLHttpRequest();
+//      xhr.open("GET", "/WebContent/invitation?pageSize=1&pageNum=1");
+//      xhr.setRequestHeader("content-type", "application/json;charset=utf-8");
+//      xhr.onreadystatechange = function () {
+//          if (xhr.readyState == 4 && xhr.status == 200) {
+//              console.log(xhr.responseText);
+//          }
+//      }
+//      xhr.send();
+        function ajax(type, url, params) {
+            var xhr = new XMLHttpRequest();
+            xhr.open(type, "/WebContent/" + url);
+            xhr.setRequestHeader("content-type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+                }
+            }
+            xhr.send(params);
+        }
+
+        ajax("DELETE", "type", JSON.stringify({
+            name: "love"
+        }))
+    </script>
     
 <jsp:include page="frame/Footer.jsp"></jsp:include>
