@@ -1,5 +1,7 @@
 package bbs.model;
 
+import java.util.Date;
+
 /**
  * Created by sjf on 5/24/17.
  */
@@ -10,10 +12,7 @@ public class Invitation {
     private String content;
     private Boolean isEssence;
     private String type;
-
-    public Invitation() {
-        super();
-    }
+    private Date dateCreate;
 
     public Invitation(String title, String content, Boolean isEssence, String type, int author) {
         super();
@@ -47,6 +46,8 @@ public class Invitation {
     public String getType() {
         return type;
     }
+
+    public Date getDateCreate() { return dateCreate; }
 
     public void setTitle(String title) {
         this.title = title;
