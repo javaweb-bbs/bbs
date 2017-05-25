@@ -76,4 +76,6 @@ public class Invitation {
     public void setType(String type) {
         this.type = type;
     }
+
+    public void setDateCreate(Date dateCreate) { this.dateCreate = dateCreate; }
 }

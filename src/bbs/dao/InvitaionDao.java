@@ -56,6 +56,7 @@ public class InvitaionDao {
                 invitation.setContent(rs.getString("content"));
                 invitation.setType(rs.getString("type"));
                 invitation.setEssence(rs.getBoolean("is_essence"));
+                invitation.setDateCreate(rs.getDate("date_create"));
                 result = new JSONObject(invitation);
             }
         } catch (SQLException e) {
