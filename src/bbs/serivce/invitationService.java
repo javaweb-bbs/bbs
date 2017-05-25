@@ -3,10 +3,10 @@ package bbs.serivce;
 import bbs.dao.InvitaionDao;
 import bbs.model.Invitation;
 import bbs.util.DbUtil;
+import bbs.util.getParams;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,18 +23,6 @@ public class invitationService extends HttpServlet {
     protected Connection con = new DbUtil().getCon();
 
     public invitationService() throws Exception {
-    }
-
-    public static JSONObject getParams(HttpServletRequest req) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream) req.getInputStream(), "utf-8"));
-        StringBuffer sb = new StringBuffer("");
-        String temp;
-        while ((temp = br.readLine()) != null) {
-            sb.append(temp);
-        }
-        br.close();
-        JSONObject params = new JSONObject(sb.toString());
-        return params;
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -67,7 +55,7 @@ public class invitationService extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         res.setContentType("application/json");
         try {
-            JSONObject params = getParams(req);
+            JSONObject params = getParams.get(req);
             Boolean isEssence = params.getBoolean("isEssence");
             int invitationId = params.getInt("invitationId");
             JSONObject updateResult = InvitaionDao.updateEssence(con, isEssence, invitationId);
@@ -81,7 +69,7 @@ public class invitationService extends HttpServlet {
     public void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         res.setContentType("application/json");
         try {
-            JSONObject params = getParams(req);
+            JSONObject params = getParams.get(req);
             Invitation newInvitation = new Invitation();
             newInvitation.setTitle(params.getString("title"));
             newInvitation.setContent(params.getString("content"));
@@ -99,7 +87,7 @@ public class invitationService extends HttpServlet {
     public void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         res.setContentType("application/json");
         try {
-            JSONObject params = getParams(req);
+            JSONObject params = getParams.get(req);
             int invitationId = params.getInt("invitationId");
             JSONObject deleteResult = InvitaionDao.delete(con, invitationId);
             PrintWriter out = res.getWriter();
