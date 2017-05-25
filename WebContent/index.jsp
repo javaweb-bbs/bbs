@@ -126,15 +126,30 @@
     </div>
 
     <script>
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", "/WebContent/invitation?pageSize=1&pageNum=1");
-      xhr.setRequestHeader("content-type", "application/json;charset=utf-8");
-      xhr.onreadystatechange = function () {
+//      var xhr = new XMLHttpRequest();
+//      xhr.open("GET", "/WebContent/invitation?pageSize=1&pageNum=1");
+//      xhr.setRequestHeader("content-type", "application/json;charset=utf-8");
+//      xhr.onreadystatechange = function () {
+//          if (xhr.readyState == 4 && xhr.status == 200) {
+//              console.log(xhr.responseText);
+//          }
+//      }
+//      xhr.send();
+        var xhr = new XMLHttpRequest();
+        xhr.open("PUT", "/WebContent/invitation");
+        xhr.setRequestHeader("content-type", "application/json");
+        xhr.onreadystatechange = function () {
           if (xhr.readyState == 4 && xhr.status == 200) {
-              console.log(xhr.responseText);
+            console.log(xhr.responseText);
           }
-      }
-      xhr.send();
+        }
+        xhr.send(JSON.stringify({
+            author: 1,
+            title: 'sujunfei love jinjingjing',
+            content: 'this is true',
+            isEssence: true,
+            type: 'love'
+        }));
     </script>
     
 <jsp:include page="frame/Footer.jsp"></jsp:include>

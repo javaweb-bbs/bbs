@@ -90,12 +90,13 @@ public class InvitaionDao {
     }
 
     // 设置精华帖
-    public static JSONObject updateEssence(Connection con, Boolean isEssence) {
+    public static JSONObject updateEssence(Connection con, Boolean isEssence, int invitationId) {
         JSONObject result = new JSONObject();
-        String message = "update invitation set is_essence = ?";
+        String message = "update invitation set is_essence = ? where invitation_id = ?";
         try {
             PreparedStatement ps = con.prepareStatement(message);
             ps.setBoolean((int) 1, isEssence);
+            ps.setInt((int) 2, invitationId);
             int num = ps.executeUpdate();
             if (num == 0) {
                 result.put("status", "Fail");
