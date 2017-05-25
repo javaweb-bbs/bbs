@@ -31,8 +31,7 @@ public class LoginServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
-		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("utf-8");
 		String action=request.getParameter("action");
 		if(action.equals("login")){
 			String username=request.getParameter("username");
@@ -44,7 +43,7 @@ public class LoginServlet extends HttpServlet{
 				request.getRequestDispatcher("Login.jsp").forward(request, response);
 				return;
 			}
-			User user=new User(username,password,0);
+			User user=new User(username,password,1);
 			Connection con=null;
 			try {
 				con=dbUtil.getCon();
@@ -75,8 +74,120 @@ public class LoginServlet extends HttpServlet{
 			}			
 			session.removeAttribute("currentUser");
 			response.sendRedirect("index.jsp");
+		}else if(action.equals("register")){
+			request.setCharacterEncoding("utf-8");	
+			String username = request.getParameter("username");
+			String sex = request.getParameter("sex");
+			int sex_i=0;
+			if(sex.equals("男"))
+				sex_i=1;
+			else if(sex.equals("女"))
+				sex_i=2;
+			else if(sex.equals("")||sex==null)
+				sex_i=1;
+			String password = request.getParameter("password");
+			String email = request.getParameter("email");
+			DbUtil dbUtil = new DbUtil();
+			Connection con = null;
+			User user =new User(username,password,sex_i,email,1);
+			try {
+				con = dbUtil.getCon();
+				int insertNums = userDao.insertUser(con, user);
+				if (insertNums > 0) {
+					request.getSession().setAttribute("succMsg", "注册成功！");
+					response.sendRedirect("Register.jsp");
+				} else {
+					request.getSession().setAttribute("errorMsg", "注册失败！");
+					response.sendRedirect("Register.jsp");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					dbUtil.closeCon(con);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}else if(action.equals("profile")){
+			int id = Integer.parseInt(request.getParameter("id"));
+			Connection con=null;
+			User user=new User();
+			try{
+				con=dbUtil.getCon();
+				user=userDao.getUserById(con, id);
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally{
+				try {
+					dbUtil.closeCon(con);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}		
+			request.getSession().setAttribute("user", user);
+			request.getRequestDispatcher("Profile.jsp").forward(request, response);
+		}else if(action.equals("updateprofile")){
+			int userId = Integer.parseInt(request.getParameter("id"));
+			String email=request.getParameter("email");
+			String sex = request.getParameter("gender");
+			System.out.println(sex);
+			int sex_i=0;
+			if(sex.equals("男"))
+				sex_i=1;
+			else if(sex.equals("女"))
+				sex_i=2;
+			else if(sex.equals("")||sex==null)
+				sex_i=1;
+			
+			Connection con = null;
+			User user=new User(userId,sex_i,email);
+			try {
+				con = dbUtil.getCon();
+				int delNums = userDao.updateUser(con, user);
+				if (delNums > 0) {
+					request.getSession().setAttribute("succMsg", "保存成功！");
+				} else {
+					request.getSession().setAttribute("errorMsg", "保存失败！");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					dbUtil.closeCon(con);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			response.sendRedirect("user?action=profile&id="+userId);
+		}else if(action.equals("updatepass")){
+			int userId = Integer.parseInt(request.getParameter("id"));
+			String password = request.getParameter("new_pwd");
+			
+			Connection con = null;
+			User user=new User(userId,password);
+			try {
+				con = dbUtil.getCon();
+				int delNums = userDao.updatePassword(con, user);
+				if (delNums > 0) {
+					request.getSession().setAttribute("succMsg", "保存成功！");
+				} else {
+					request.getSession().setAttribute("errorMsg", "保存失败！");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					dbUtil.closeCon(con);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			response.sendRedirect("user?action=profile&id="+userId);
+		}else if(action.equals("bloginfo")){
+			
+			response.sendRedirect("BlogInfo.jsp");
 		}
-		
 	}
 }
 

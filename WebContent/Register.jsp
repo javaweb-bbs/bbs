@@ -69,6 +69,13 @@ String existMsg = (String)request.getSession().getAttribute("existMsg");
 						<input type="text" id="username" name="username" placeholder="请输入用户名" class="form-control">					
 					</div>
 					<div class="form-group">
+						<label for="sex">性别</label><br/>							
+						<label class="radio-inline">
+  						<input type="radio" name="sex" id="sex" value="男">男</label>
+						<label class="radio-inline">
+  						<input type="radio" name="sex" id="sex" value="女">女</label>
+					</div>
+					<div class="form-group">
 						<label  for="email">E-mail</label>
 						<input type="text" id="email" name="email" placeholder="请输入邮箱地址" class="form-control">						
 					</div>

@@ -1,30 +1,49 @@
 package bbs.model;
 
+/**
+ * 用户实体对象
+ * @author 王k
+ *
+ */
 public class User {
 
 	private int userId;
 	private String userName;
 	private String passWord;
 	private int sex;
+	private String email;
 	private int isAdmin;
 	
 	public User() {
 		super();
 	}
 	
+	public User(int userId, String passWord) {
+		super();
+		this.userId = userId;
+		this.passWord = passWord;
+	}
+
+	public User(int userId, int sex, String email) {
+		super();
+		this.userId = userId;
+		this.sex = sex;
+		this.email = email;
+	}
+
 	public User(String userName, String passWord, int isAdmin) {
 		super();
 		this.userName = userName;
 		this.passWord = passWord;
 		this.isAdmin = isAdmin;
 	}
-
-	public User(int userId, String userName, String passWord, int sex, int isAdmin) {
+	
+	public User(String userName, String passWord, int sex, String email, int isAdmin) {
 		super();
-		this.userId = userId;
 		this.userName = userName;
 		this.passWord = passWord;
 		this.sex = sex;
+		this.email = email;
 		this.isAdmin = isAdmin;
 	}
 
@@ -51,6 +70,13 @@ public class User {
 	}
 	public void setSex(int sex) {
 		this.sex = sex;
+	}
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public int getIsAdmin() {
 		return isAdmin;

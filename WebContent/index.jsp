@@ -23,9 +23,9 @@
           <ul class="nav navbar-nav">
             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">板块管理<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href=""><i class="glyphicon glyphicon-cog"></i> 帖子管理</a></li>
+                    <li><a href="${pageContext.request.contextPath }/invitation?action=imanage"><i class="glyphicon glyphicon-cog"></i> 帖子管理</a></li>
                     <li class="divider"></li>
-                    <li><a href=""><i class="glyphicon glyphicon-cog"></i> 分类管理</a></li>
+                    <li><a href="${pageContext.request.contextPath }/invitationtype?action=itmanage"><i class="glyphicon glyphicon-cog"></i> 分类管理</a></li>
                     <li class="divider"></li>
                     <li><a href=""><i class="glyphicon glyphicon-cog"></i> 评论管理</a></li>
                 </ul>
@@ -46,11 +46,11 @@
              <ul class="nav pull-right">
                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">欢迎，<%=u.getUserName() %><b class="caret"></b></a>
                      <ul class="dropdown-menu">
-                         <li><a href=""><i class="glyphicon glyphicon-cog"></i> 编辑个人信息</a></li>
-                           <li class="divider"></li>
-                           <li><a href=""><i class="glyphicon glyphicon-cog"></i> 编辑BBS信息</a></li>
-                           <li class="divider"></li>
-                           <li><a href="user?action=logout"><i class="glyphicon glyphicon-off"></i> 登出</a></li>
+                         <li><a href="${pageContext.request.contextPath }/user?action=profile&id=<%=u.getUserId() %>"><i class="glyphicon glyphicon-cog"></i> 编辑个人信息</a></li>
+                         <li class="divider"></li>
+                         <li><a href="${pageContext.request.contextPath }/user?action=bloginfo&id=<%=u.getUserId()%>"><i class="glyphicon glyphicon-cog"></i> 编辑BBS信息</a></li>
+                         <li class="divider"></li>
+                         <li><a href="user?action=logout"><i class="glyphicon glyphicon-off"></i> 登出</a></li>
                        </ul>
                    </li>
               </ul>
@@ -68,17 +68,15 @@
         <div id="blog" class="col-lg-8" >
           <h1><a href="index.jsp">BBS论坛——<small>基于JSP, Servlet技术构建</small></a></h1>
           <br>
- 		  <h3><a href="" target="_blank"></a></h3>
-          <!-- <p>
+ 		  <h3><a href="" target="_blank">java学习</a></h3>
+          <p>
           <i class="glyphicon glyphicon-user"></i> 
-          <a href="" target="_blank"></a> 
-          		 
-          		 
-		| <i class="glyphicon glyphicon-calendar"></i> 
-		| 阅读  次
- 		  </p> -->
+          <a href="" target="_blank">小明</a>	 
+		| <i class="glyphicon glyphicon-calendar"></i>2017-04-01 
+		| 阅读 10 次
+ 		  </p>
           
-          <p></p><br>
+          <p>学习java学习学习学习学习学习</p><br>
           <a class="btn btn-primary" href="">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>               
           <hr>
           
