@@ -1,6 +1,6 @@
 package bbs.serivce;
 
-import bbs.dao.InvitaionDao;
+import bbs.dao.InvitationDao;
 import bbs.model.Invitation;
 import bbs.util.DbUtil;
 import bbs.util.getParams;
@@ -20,7 +20,11 @@ import java.sql.Connection;
 
 @WebServlet("/invitation")
 public class invitationService extends HttpServlet {
-    protected Connection con = new DbUtil().getCon();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	protected Connection con = new DbUtil().getCon();
 
     public invitationService() throws Exception {
     }
@@ -32,7 +36,7 @@ public class invitationService extends HttpServlet {
             PrintWriter out = res.getWriter();
             if (req.getParameter("invitationId") != null) {
                 int invitationId = Integer.parseInt(req.getParameter("invitationId"));
-                JSONObject invitation = InvitaionDao.detail(con, invitationId);
+                JSONObject invitation = InvitationDao.detail(con, invitationId);
                 out.print(invitation);
             } else {
                 int pageNum = 1;
@@ -45,7 +49,7 @@ public class invitationService extends HttpServlet {
                 }
                 System.out.println("pageSize is " + pageSize);
                 System.out.println("pageNum is " + pageNum);
-                JSONObject invitationList = InvitaionDao.list(con, pageNum, pageSize);
+                JSONObject invitationList = InvitationDao.list(con, pageNum, pageSize);
                 out.print(invitationList);
             }
         } catch (Exception e) {
@@ -60,7 +64,7 @@ public class invitationService extends HttpServlet {
             JSONObject params = getParams.get(req);
             Boolean isEssence = params.getBoolean("isEssence");
             int invitationId = params.getInt("invitationId");
-            JSONObject updateResult = InvitaionDao.updateEssence(con, isEssence, invitationId);
+            JSONObject updateResult = InvitationDao.updateEssence(con, isEssence, invitationId);
             PrintWriter out = res.getWriter();
             out.print(updateResult);
         } catch (Exception e) {
@@ -79,7 +83,7 @@ public class invitationService extends HttpServlet {
             newInvitation.setAuthor(params.getInt("author"));
             newInvitation.setType(params.getString("type"));
             newInvitation.setEssence(params.getBoolean("isEssence"));
-            JSONObject addResult = InvitaionDao.add(con, newInvitation);
+            JSONObject addResult = InvitationDao.add(con, newInvitation);
             PrintWriter out = res.getWriter();
             out.print(addResult);
         } catch (Exception e) {
@@ -93,7 +97,7 @@ public class invitationService extends HttpServlet {
         try {
             JSONObject params = getParams.get(req);
             int invitationId = params.getInt("invitationId");
-            JSONObject deleteResult = InvitaionDao.delete(con, invitationId);
+            JSONObject deleteResult = InvitationDao.delete(con, invitationId);
             PrintWriter out = res.getWriter();
             out.print(deleteResult);
         } catch (Exception e) {

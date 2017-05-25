@@ -1,5 +1,5 @@
-<%@ page language="java" import="java.util.*" import="bbs.model.*" pageEncoding="UTF-8"%>
-
+<%@ page language="java" import="java.util.*" import="bbs.model.*" 
+import="bbs.dao.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -7,15 +7,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <%
 User u = (User)request.getSession().getAttribute("user");
+//添加下面两行代码用于分页显示
+int curPage = (Integer)request.getAttribute("curPage");
+int totalPages = (Integer)request.getAttribute("totalPages");
  %>
 
 <jsp:include page="frame/Header.jsp"></jsp:include>
-<body>
 
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-         <a class="navbar-brand" href="index.jsp">BBS</a>
+          <a class="navbar-brand" href="index.jsp">BBS</a>
         </div>
 
         <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -31,9 +34,9 @@ User u = (User)request.getSession().getAttribute("user");
           <ul class="nav navbar-nav">
             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">板块管理<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href="${pageContext.request.contextPath }/invitation?action=manage"><i class="glyphicon glyphicon-cog"></i> 帖子管理</a></li>
+                    <li><a href="${pageContext.request.contextPath }/invitation?action=imanage"><i class="glyphicon glyphicon-cog"></i> 帖子管理</a></li>
                     <li class="divider"></li>
-                    <li><a href=""><i class="glyphicon glyphicon-cog"></i> 分类管理</a></li>
+                    <li><a href="${pageContext.request.contextPath }/invitationtype?action=itmanage"><i class="glyphicon glyphicon-cog"></i> 分类管理</a></li>
                     <li class="divider"></li>
                     <li><a href=""><i class="glyphicon glyphicon-cog"></i> 评论管理</a></li>
                 </ul>
@@ -55,9 +58,7 @@ User u = (User)request.getSession().getAttribute("user");
                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">欢迎，<%=u.getUserName() %><b class="caret"></b></a>
                      <ul class="dropdown-menu">
                          <li><a href="${pageContext.request.contextPath }/user?action=profile&id=<%=u.getUserId() %>"><i class="glyphicon glyphicon-cog"></i> 编辑个人信息</a></li>
-                         <li class="divider"></li>
-                         <li><a href=""><i class="glyphicon glyphicon-cog"></i> 编辑主页信息</a></li>
-                         <li class="divider"></li>
+                         <li class="divider"></li>                   
                          <li><a href="user?action=logout"><i class="glyphicon glyphicon-off"></i> 登出</a></li>
                        </ul>
                    </li>
@@ -69,48 +70,54 @@ User u = (User)request.getSession().getAttribute("user");
         </div>
       </div>
     </nav>
-   	   
-	
-	<div class="container">
-		<div class="row col-md-6">	       
-	    		<form class="form-horizontal" action="" method="post" class="form-horizontal" 
-	    		name="blog_info_form" id="blog_info_form" onsubmit="return isValidate(blog_info_form)">
-	    			
-	    			<div class="form-group">
-	    				<label for="email">博客名称</label>	    				
-    					<input class="form-control" name="blog_name" type="text" value="" id="blog_name">
-	    			</div>
-	     
-	    			<div class="form-group">
-	    				<label for="address">博客描述</label>	    				
-	    				<input class="form-control" name="description" type="text" value="" id="blog_des">	    				
-	    			</div>
-	     
-	    			<div class="form-group">
-	    				<label for="zip">博客公告</label>	    					    				
-                   		 <textarea class="form-control" id="annoucement" name="annoucement"  rows="5"></textarea>                		
-	    			</div>   		
-	     
-	    			<div class="form-group">
-	    				<button type="submit" class="btn btn-primary">保存</button>
-	    			</div>
-	    		</form>
-	    	</div>
+  	
+	<%-- 删除评论的提示消息 --%>
+  	
+	<% if (null != u) { %>
+	<div class="container">	
+		<div class="well">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>评论内容</th>
+						<th>评论人</th>
+						<th>评论的文章标题</th>
+						<th>评论时间</th>
+						<th style="width: 50px;">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><a onClick="dele('')"><i
+								class="glyphicon glyphicon-remove"></i></a></td>
+					</tr>
+					
+				</tbody>
+			</table>
 		</div>
+		<div>
+		 <!-- pager -->
+          <ul class="pager">
+            <li class="previous"><a href="">&larr; 上一页</a></li>
+            <li class="next"><a href="">下一页  &rarr;</a></li>
+          </ul>
+		</div>
+		
+	</div>
+	<%} %>
+	
 <jsp:include page="frame/Footer.jsp"></jsp:include>
 
 <script type="text/javascript">
-function isValidate(blog_info_form) {
-	var blog_name = blog_info_form.blog_name.value;
-	var description = blog_info_form.description.value;
-	var annoucement = blog_info_form.annoucement.value;
+function dele(deleUrl) {
 	
-	if (blog_name == "" || description == "" || annoucement == "") {
-		alert("博客名称，博客描述，博客公告为必填项");	
-		
-		return false;
+	if (confirm("你确定要删除该评论吗？")) {
+		location.href = deleUrl;
 	}
-	
-	return true;
 }
 </script>

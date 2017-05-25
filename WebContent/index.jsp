@@ -47,9 +47,7 @@
                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">欢迎，<%=u.getUserName() %><b class="caret"></b></a>
                      <ul class="dropdown-menu">
                          <li><a href="${pageContext.request.contextPath }/user?action=profile&id=<%=u.getUserId() %>"><i class="glyphicon glyphicon-cog"></i> 编辑个人信息</a></li>
-                         <li class="divider"></li>
-                         <li><a href="${pageContext.request.contextPath }/user?action=bloginfo&id=<%=u.getUserId()%>"><i class="glyphicon glyphicon-cog"></i> 编辑BBS信息</a></li>
-                         <li class="divider"></li>
+                         <li class="divider"></li>                   
                          <li><a href="user?action=logout"><i class="glyphicon glyphicon-off"></i> 登出</a></li>
                        </ul>
                    </li>
@@ -67,7 +65,7 @@
         <div id="blog" class="col-lg-8" >
           <h1><a href="index.jsp">BBS论坛——<small>基于JSP, Servlet技术构建</small></a></h1>
           <br>
-<<<<<<< HEAD
+
  		  <h3><a href="" target="_blank">java学习</a></h3>
           <p>
           <i class="glyphicon glyphicon-user"></i> 
@@ -77,10 +75,9 @@
  		  </p>
           
           <p>学习java学习学习学习学习学习</p><br>
-=======
  		  <h3><a href="" target="_blank"></a></h3>
           <p></p><br>
->>>>>>> b0ce967299ea074fa6bcc240739d97f76fd383fc
+
           <a class="btn btn-primary" href="">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>               
           <hr>
           <ul class="pager">
@@ -153,15 +150,14 @@
             xhr.setRequestHeader("content-type", "application/json");
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    console.log(xhr.responseText);
+                    renderDom(data)
                 }
             }
             xhr.send(params);
         }
+        
 
-        ajax("DELETE", "type", JSON.stringify({
-            name: "love"
-        }))
+        ajax("GET", "inviation", null)
     </script>
     
 <jsp:include page="frame/Footer.jsp"></jsp:include>
