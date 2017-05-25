@@ -135,17 +135,23 @@
 //          }
 //      }
 //      xhr.send();
-        var xhr = new XMLHttpRequest();
-        xhr.open("DELETE", "/WebContent/invitation");
-        xhr.setRequestHeader("content-type", "application/json");
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log(xhr.responseText);
-          }
+        function ajax(type, url, params) {
+            var xhr = new XMLHttpRequest();
+            xhr.open(type, "/WebContent/" + url);
+            xhr.setRequestHeader("content-type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+                }
+            }
+            xhr.send(params);
         }
-        xhr.send(JSON.stringify({
-            invitationId: 1
-        }));
+
+        ajax("GET", "invitation?pageNum=1", null)
+        ajax("POST", "invitation", JSON.stringify({
+            invitationId: 2,
+            isEssence: false
+        }))
     </script>
     
 <jsp:include page="frame/Footer.jsp"></jsp:include>

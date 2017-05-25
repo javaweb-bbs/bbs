@@ -14,16 +14,21 @@ import java.sql.SQLException;
  */
 public class InvitaionDao {
     // 获取帖子列表
-    public static JSONArray list (Connection con, int pageNum, int pageSize) {
-        JSONArray result = new JSONArray();
+    public static JSONObject list (Connection con, int pageNum, int pageSize) {
+        JSONObject result = new JSONObject();
+        JSONArray invitations = new JSONArray();
         String search = "select *, (select count(*) from invitation) as total from invitation limit ?,?";
+        int count = 0;
         try {
             PreparedStatement ps = con.prepareStatement(search);
             ps.setInt((int) 1, (pageNum - 1) * pageSize);
             ps.setInt((int) 2, pageSize);
 
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
+                if (count == 0) {
+                    result.put("total", rs.getInt("total"));
+                }
                 Invitation resultInvitation = new Invitation();
                 resultInvitation.setAuthor(rs.getInt("author"));
                 resultInvitation.setInvitationId(rs.getInt("invitation_id"));
@@ -31,10 +36,12 @@ public class InvitaionDao {
                 resultInvitation.setContent(rs.getString("content"));
                 resultInvitation.setType(rs.getString("type"));
                 resultInvitation.setEssence(rs.getBoolean("is_essence"));
-                result.put(new JSONObject(resultInvitation));
+                resultInvitation.setDateCreate(rs.getDate("date_create"));
+                invitations.put(new JSONObject(resultInvitation));
+                count++;
             }
-
-            con.close();
+            System.out.println("invitations is " + invitations);
+            result.put("invitations", invitations);
         } catch (SQLException e) {
             e.printStackTrace();
         }

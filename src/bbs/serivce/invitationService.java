@@ -3,7 +3,6 @@ package bbs.serivce;
 import bbs.dao.InvitaionDao;
 import bbs.model.Invitation;
 import bbs.util.DbUtil;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -21,7 +20,10 @@ import java.sql.Connection;
 
 @WebServlet("/invitation")
 public class invitationService extends HttpServlet {
-    Connection con = null;
+    protected Connection con = new DbUtil().getCon();
+
+    public invitationService() throws Exception {
+    }
 
     public static JSONObject getParams(HttpServletRequest req) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream) req.getInputStream(), "utf-8"));
@@ -35,22 +37,28 @@ public class invitationService extends HttpServlet {
         return params;
     }
 
-    public void init() {
-        try {
-            con = new DbUtil().getCon();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         res.setContentType("application/json");
         try {
-            int pageNum = Integer.parseInt(req.getParameter("pageNum"));
-            int pageSize = Integer.parseInt(req.getParameter("pageSize"));
-            JSONArray invitationList = InvitaionDao.list(con, pageNum, pageSize);
             PrintWriter out = res.getWriter();
-            out.print(invitationList);
+            if (req.getParameter("invitationId") != null) {
+                int invitationId = Integer.parseInt(req.getParameter("invitationId"));
+                JSONObject invitation = InvitaionDao.detail(con, invitationId);
+                out.print(invitation);
+            } else {
+                int pageNum = 1;
+                int pageSize = 10;
+                if (req.getParameter("pageNum") != null) {
+                    pageNum = Integer.parseInt(req.getParameter("pageNum"));
+                }
+                if (req.getParameter("pageSize") != null) {
+                    pageSize = Integer.parseInt(req.getParameter("pageSize"));
+                }
+                System.out.println("pageSize is " + pageSize);
+                System.out.println("pageNum is " + pageNum);
+                JSONObject invitationList = InvitaionDao.list(con, pageNum, pageSize);
+                out.print(invitationList);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
