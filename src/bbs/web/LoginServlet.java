@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet{
 				request.getRequestDispatcher("Login.jsp").forward(request, response);
 				return;
 			}
-			User user=new User(username,password,1);
+			User user=new User(username,password,0);
 			Connection con=null;
 			try {
 				con=dbUtil.getCon();
