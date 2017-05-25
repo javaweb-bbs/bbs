@@ -2,11 +2,7 @@ package bbs.model;
 
 import java.util.Date;
 
-/**
- * 帖子实体对象
- * @author 王k
- *
- */
+
 public class Invitation {
     private int invitationId;
     private int author;
