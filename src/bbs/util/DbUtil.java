@@ -4,8 +4,8 @@ import java.sql.DriverManager;
 
 public class DbUtil {
 	private String dbUrl="jdbc:mysql://localhost:3306/bbs";
-	private String dbUserName="root";//�û���
-	private String dbPasssword="sjf978977";//����
+	private String dbUserName="root";
+	private String dbPasssword="sjf978977";
 	private String jdbcName="com.mysql.jdbc.Driver";
 
 	//	链接数据库

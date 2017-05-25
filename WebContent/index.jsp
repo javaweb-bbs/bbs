@@ -65,17 +65,8 @@
         <div id="blog" class="col-lg-8" >
           <h1><a href="index.jsp">BBS论坛——<small>基于JSP, Servlet技术构建</small></a></h1>
           <br>
- 		  <h3><a href="" target="_blank">java学习</a></h3>
-          <p>
-          <i class="glyphicon glyphicon-user"></i> 
-          <a href="" target="_blank">小明</a>	 
-		| <i class="glyphicon glyphicon-calendar"></i>2017-04-01 
-		| 阅读 10 次
- 		  </p>
-          
-          <p>学习java学习学习学习学习学习</p><br>
-          <a class="btn btn-primary" href="">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>               
-          <hr>
+          <div class="list">
+          </div>
           <ul class="pager">
             <li class="previous"><a href="">&larr; 上一页</a></li>
             <li class="next"><a href="">下一页  &rarr;</a></li>
@@ -97,52 +88,34 @@
             <h4>帖子分类</h4>
               <div class="row">
                 <div class="col-lg-6">
-                  <ul class="list-unstyled">
-                    <li>
-                      <a href="#"></a>
-                    </li>
-                    <li>无分类</li>
+                  <ul class="list-unstyled type-list">
                   </ul>
                 </div>
               </div>
           </div>
-          <div class="well">
-            <h4>本周活跃版主</h4>
-            <div class="row">
-              <ul class="list-unstyled">
-                <li><a href="" target="_blank"></a></li>
-                <li>暂无排名，sorry......</li>
-              </ul>
-            </div>
-          </div>
-          <div class="well">
-            <h4>精华TOP10</h4>
-            <div class="row">
-              <ul class="list-unstyled">
-                <li><a href="" target="_blank"></a></li>
-                <li>暂无排名，sorry......</li>
-              </ul>
-            </div>
-          </div>
+          <%--<div class="well">--%>
+            <%--<h4>本周活跃版主</h4>--%>
+            <%--<div class="row">--%>
+              <%--<ul class="list-unstyled">--%>
+                <%--<li><a href="" target="_blank"></a></li>--%>
+                <%--<li>暂无排名，sorry......</li>--%>
+              <%--</ul>--%>
+            <%--</div>--%>
+          <%--</div>--%>
+          <%--<div class="well">--%>
+            <%--<h4>精华TOP10</h4>--%>
+            <%--<div class="row">--%>
+              <%--<ul class="list-unstyled">--%>
+                <%--<li><a href="" target="_blank"></a></li>--%>
+                <%--<li>暂无排名，sorry......</li>--%>
+              <%--</ul>--%>
+            <%--</div>--%>
+          <%--</div>--%>
           </div>
       </div>
     </div>
 
-    <script>
-        function ajax(type, url, params) {
-            var xhr = new XMLHttpRequest();
-            xhr.open(type, "/WebContent/" + url);
-            xhr.setRequestHeader("content-type", "application/json");
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    renderDom(data)
-                }
-            }
-            xhr.send(params);
-        }
-        
+    <script src="js/ajax.js"></script>
+    <script src="js/index.js"></script>
 
-        ajax("GET", "inviation", null)
-    </script>
-    
 <jsp:include page="frame/Footer.jsp"></jsp:include>
