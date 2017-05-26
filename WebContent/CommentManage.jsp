@@ -1,15 +1,10 @@
 <%@ page language="java" import="java.util.*" import="bbs.model.*" 
 import="bbs.dao.*" pageEncoding="UTF-8"%>
 <%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
-
-<%
-User u = (User)request.getSession().getAttribute("user");
+User u = (User)request.getSession().getAttribute("currentUser");
 //添加下面两行代码用于分页显示
-int curPage = (Integer)request.getAttribute("curPage");
-int totalPages = (Integer)request.getAttribute("totalPages");
+/* int curPage = (Integer)request.getAttribute("curPage");
+int totalPages = (Integer)request.getAttribute("totalPages"); */
  %>
 
 <jsp:include page="frame/Header.jsp"></jsp:include>

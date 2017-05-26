@@ -65,7 +65,7 @@ public class Invitation {
 
     public void setEssence(Boolean essence) {
         isEssence = essence;
-    }
+    } 
 
     public void setInvitationId(int invitationId) {
         this.invitationId = invitationId;

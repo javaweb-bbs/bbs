@@ -34,7 +34,7 @@ public class UserDao {
 			resultUser.setPassWord(rs.getString("password"));
 			resultUser.setSex(rs.getInt("sex"));
 			resultUser.setEmail(rs.getString("email"));
-			resultUser.setIsAdmin(1);
+			resultUser.setIsAdmin(0);
 		}
 		return resultUser;
 	}

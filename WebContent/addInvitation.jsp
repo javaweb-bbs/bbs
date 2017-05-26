@@ -3,20 +3,7 @@ import="bbs.dao.*" pageEncoding="UTF-8"%>
 
 <%
 User u = (User)request.getSession().getAttribute("currentUser");
-
-//添加下面两行代码用于分页显示
-/* int curPage = (Integer)request.getAttribute("curPage");
-int totalPages = (Integer)request.getAttribute("totalPages");
-
-String succAddMsg = (String)request.getSession().getAttribute("succAddMsg");	//新建分类消息
-String errorAddMsg = (String)request.getSession().getAttribute("errorAddMsg");
-
-String succDeleMsg = (String)request.getSession().getAttribute("succDeleMsg");	//删除分类消息
-String errorDeleMsg = (String)request.getSession().getAttribute("errorDeleMsg");
-
-String succUpdateMsg = (String)request.getSession().getAttribute("succUpdateMsg");	//更新分类消息
-String errorUpdateMsg = (String)request.getSession().getAttribute("errorUpdateMsg"); */
- %>
+%>
 
 <jsp:include page="frame/Header.jsp"></jsp:include>
 
@@ -64,9 +51,7 @@ String errorUpdateMsg = (String)request.getSession().getAttribute("errorUpdateMs
                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">欢迎，<%=u.getUserName() %><b class="caret"></b></a>
                      <ul class="dropdown-menu">
                          <li><a href="${pageContext.request.contextPath }/user?action=profile&id=<%=u.getUserId() %>"><i class="glyphicon glyphicon-cog"></i> 编辑个人信息</a></li>
-                         <li class="divider"></li>
-                         <li><a href="${pageContext.request.contextPath }/user?action=bloginfo&id=<%=u.getUserId()%>"><i class="glyphicon glyphicon-cog"></i> 编辑BBS信息</a></li>
-                         <li class="divider"></li>
+                         <li class="divider"></li>                   
                          <li><a href="user?action=logout"><i class="glyphicon glyphicon-off"></i> 登出</a></li>
                        </ul>
                    </li>
@@ -75,71 +60,53 @@ String errorUpdateMsg = (String)request.getSession().getAttribute("errorUpdateMs
           <%
           	}
           %>
-          
         </div>
       </div>
     </nav>
-
-	<%-- 新建分类结果提示消息 --%>
-  	  	
-  	<%-- 删除分类结果提示消息 --%>
-  	
-  	<%-- 更新分类的结果提示消息 --%>
-
-	<% if (null != u) { %>
+        
+    <% if (null != u) { %>
 	<div class="container">
-		<div class="btn-toolbar">
-		    <a class="btn btn-primary" href="">新建分类</a>
-		</div>
-		<div class="well">
-		    <table class="table">
-		      <thead>
-		        <tr>
-		          <th>分类名称</th>
-		          <th>包含文章数量</th>
-		          <th style="width: 50px;">操作	</th>
-		        </tr>
-		      </thead>
-		      <tbody>
-		      	
-		        <tr>
-		          <td>java</td>
-		          <td>12</td>
-		          <td>
-		          				
-		              <a href=""><i class="glyphicon glyphicon-pencil"></i></a>
-		              <a onClick="dele('')"><i class="glyphicon glyphicon-remove"></i></a>
-		          </td>
-		        </tr>
-		        
-		      </tbody>
-		    </table>
-		</div>
 		
-		<div>
-		 <!-- pager -->
-          <ul class="pager">
-          	
-            <li class="previous"><a href="">&larr; 上一页</a></li>
-            
-            
-            
-            <li class="next"><a href="">下一页  &rarr;</a></li>
-           
-          </ul>
+		<div class="row col-md-12">
+			<div class="col-md-12">
+			   <div class="col-md-12">
+					<ol class="breadcrumb">
+		              <li><a href="">帖子管理</a></li>
+		              <li class="active">新建帖子</li>
+		            </ol>
+	            </div>
+	            
+	            <form class="form-horizontal" name="add_artical_form" action="" method="post">
+	            	
+	                <div class="col-md-6">
+	                    <div class="form-group">
+	                    <label for="title">标题</label>
+	                    <input class="form-control" id="name" name="title" type="text" >
+	                    </div>
+	                    <div class="form-group">
+	                    <label for="sys_category">分类</label>
+	                        <select class="form-control"  id="subject" name="sys_category">
+	                    		<!--  遍历出来   -->
+	                    		<option value="" selected=""></option>
+                            </select>
+                         </div> 
+	                
+	                <div class="form-group">
+	                    <textarea class="form-control" id="message" name="summary"  placeholder="摘要" rows="5"></textarea>
+	                </div>
+	                
+	                <div class="form-group">
+	                    <textarea class="form-control" id="message" name="content"  placeholder="文章内容" rows="5"></textarea>
+	                </div>
+	                  
+	                <div class="form-group">
+	                    <button id="contact-submit" type="submit" class="btn btn-primary input-medium pull-right">保存</button>
+	                </div>
+	                </div>
+	            </form>
+	        </div>
 		</div>
-		
-		
-	</div>	<!-- /container -->		
+	</div>
 	<% } %>
 	
 <jsp:include page="frame/Footer.jsp"></jsp:include>
-
-<script type="text/javascript">
-function dele(deleUrl) {
-	
-	if (confirm("你确定要删除该分类吗？")) {
-		location.href = deleUrl;
-	}
-}
-</script>
