@@ -65,11 +65,13 @@
         <div id="blog" class="col-lg-8" >
           <h1><a href="index.jsp">BBS论坛——<small>基于JSP, Servlet技术构建</small></a></h1>
           <br>
+          
           <div class="list">
+          	
           </div>
           <ul class="pager">
-            <li class="previous"><a href="">&larr; 上一页</a></li>
-            <li class="next"><a href="">下一页  &rarr;</a></li>
+            <li class="previous"><a>&larr; 上一页</a></li>
+            <li class="next"><a>下一页  &rarr;</a></li>
           </ul>
         </div>
         <div class="col-lg-4">
