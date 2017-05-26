@@ -1,7 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 
-<jsp:include page="frame/Header.jsp"></jsp:include>
-
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
      <div class="container">
@@ -52,5 +50,3 @@
 			</form>
 		</div>
 	</div>
-
-	<jsp:include page="frame/Footer.jsp"></jsp:include>

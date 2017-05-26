@@ -14,7 +14,7 @@ import bbs.util.DbUtil;
 import bbs.util.Stringutil;
 import org.json.JSONObject;
 
-@WebServlet("/user")
+@WebServlet("/admin")
 public class LoginServlet extends HttpServlet{
 	/**
 	 * 
