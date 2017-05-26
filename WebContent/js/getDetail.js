@@ -35,6 +35,7 @@ window.onload = function () {
         data = JSON.parse(data)
         if (data.status == 'add success') {
             ajax('GET', 'comment?invitationId=' + invitationId, null, getComent)
+            document.querySelector('.comment-content').value = ''
         } else {
             alert("评论失败")
         }

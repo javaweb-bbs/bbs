@@ -47,8 +47,6 @@ public class invitationService extends HttpServlet {
                 if (req.getParameter("pageSize") != null) {
                     pageSize = Integer.parseInt(req.getParameter("pageSize"));
                 }
-                System.out.println("pageSize is " + pageSize);
-                System.out.println("pageNum is " + pageNum);
                 JSONObject invitationList = InvitationDao.list(con, pageNum, pageSize);
                 out.print(invitationList);
             }
