@@ -3,6 +3,9 @@
 <%
 int userId = 0;
 User u = (User)request.getSession().getAttribute("currentUser");		//用户登录后的信息
+if(u==null){
+	request.getRequestDispatcher("Login.jsp").forward(request, response);
+}
 %>
 
 
