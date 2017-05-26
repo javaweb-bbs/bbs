@@ -47,6 +47,7 @@ User u = (User)request.getSession().getAttribute("currentUser");		//用户登录
           	if(u==null){
           %>
           <ul class="nav navbar-nav navbar-right">
+			  <input type="hidden" id="user-id" value="<%=u.getUserId() %>">
           	<li><a href="Login.jsp">登录</a></li>
           	<li><a href="Register.jsp" target="_blank">注册</a></li>
           </ul>
@@ -78,36 +79,20 @@ User u = (User)request.getSession().getAttribute("currentUser");		//用户登录
 				<p>
 					<i class="icon-user"></i> <a href="#">wk</a> | <i
 						class="icon-calendar"></i>
-					2017-04-01
-					| 阅读
-					10
-					次
+					2017-04-01 | 阅读10次
 				</p>
 				<hr>
 				<p>java学习学习学习</p>
 				<hr>
-
-				
-				
-				
-				
-				<!-- the comments -->
-				
 				<p>
 					<i class="icon-user"></i><a href="" target="_blank">王凯</a> | <i class="icon-calendar"></i>2017-05-02
 				</p>
 				<p>不错不错</p>
-
 				<hr>
-				<!-- the comment box -->
-
 				<div class="well">
 					<h4>评论：</h4>
-
 					<%
-						if (null != u) {
-					               	userId = u.getUserId();
-					               }
+						if (null != u) { userId = u.getUserId();}
 					%>
 					<form role="form" name="comment" action="" method="post" onsubmit="return isValidate(comment)">
 						<div class="form-group">
@@ -116,19 +101,14 @@ User u = (User)request.getSession().getAttribute("currentUser");		//用户登录
 						<button type="submit" class="btn btn-primary">提交</button>
 					</form>
 				</div>
-				
-				
 			</div>
-
 			<div class="col-lg-3">
 				<div class="well">
 					<h4>所属分类</h4>
 					<div class="row">
 						<div class="col-lg-6">
 							<ul class="list-unstyled">
-								
 								<li>java</li>
-								
 							</ul>
 						</div>
 					</div>
@@ -144,7 +124,6 @@ User u = (User)request.getSession().getAttribute("currentUser");		//用户登录
 		</div>
 	</div>
 		<jsp:include page="frame/Footer.jsp"></jsp:include>
-
 		<script type="text/javascript">
 			function isValidate(comment) {
 				var comment_content = comment.comment_content.value;

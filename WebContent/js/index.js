@@ -47,7 +47,7 @@ window.onload = function () {
             alert("当前已是最后一页")
         } else {
             currentPage += 1
-            ajax("GET", "invitation?pageNum=" + currentPage, renderList)
+            ajax("GET", "invitation?pageNum=" + currentPage, null, renderList)
         }
     }
 
@@ -56,7 +56,7 @@ window.onload = function () {
             alert("当前已经是第一页")
         } else {
             currentPage -= 1
-            ajax("GET", "invitation?pageNum=" + currentPage, renderList)
+            ajax("GET", "invitation?pageNum=" + currentPage, null, renderList)
         }
     }
 
