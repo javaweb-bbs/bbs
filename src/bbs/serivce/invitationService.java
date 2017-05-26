@@ -23,8 +23,7 @@ public class invitationService extends HttpServlet {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	protected Connection con = new DbUtil().getCon();
+	protected DbUtil util = new DbUtil();
 
     public invitationService() throws Exception {
     }
@@ -33,6 +32,7 @@ public class invitationService extends HttpServlet {
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
         try {
+            Connection con = util.getCon();
             PrintWriter out = res.getWriter();
             if (req.getParameter("invitationId") != null) {
                 int invitationId = Integer.parseInt(req.getParameter("invitationId"));
@@ -59,6 +59,7 @@ public class invitationService extends HttpServlet {
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
         try {
+            Connection con = util.getCon();
             JSONObject params = getParams.get(req);
             Boolean isEssence = params.getBoolean("isEssence");
             int invitationId = params.getInt("invitationId");
@@ -74,6 +75,7 @@ public class invitationService extends HttpServlet {
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
         try {
+            Connection con = util.getCon();
             JSONObject params = getParams.get(req);
             Invitation newInvitation = new Invitation();
             newInvitation.setTitle(params.getString("title"));
@@ -93,6 +95,7 @@ public class invitationService extends HttpServlet {
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
         try {
+            Connection con = util.getCon();
             JSONObject params = getParams.get(req);
             int invitationId = params.getInt("invitationId");
             JSONObject deleteResult = InvitationDao.delete(con, invitationId);
