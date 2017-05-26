@@ -50,6 +50,7 @@ User u = (User)request.getSession().getAttribute("currentUser");
              <ul class="nav pull-right">
                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">欢迎，<%=u.getUserName() %><b class="caret"></b></a>
                      <ul class="dropdown-menu">
+                         <input type="hidden" id="user-id" value="<%=u.getUserId() %>">
                          <li><a href="${pageContext.request.contextPath }/user?action=profile&id=<%=u.getUserId() %>"><i class="glyphicon glyphicon-cog"></i> 编辑个人信息</a></li>
                          <li class="divider"></li>                   
                          <li><a href="user?action=logout"><i class="glyphicon glyphicon-off"></i> 登出</a></li>
@@ -76,7 +77,7 @@ User u = (User)request.getSession().getAttribute("currentUser");
 		            </ol>
 	            </div>
 	            
-	            <form class="form-horizontal" name="add_artical_form" action="" method="post">
+	            <form class="form-horizontal" name="add_artical_form">
 	            	
 	                <div class="col-md-6">
 	                    <div class="form-group">
@@ -87,13 +88,9 @@ User u = (User)request.getSession().getAttribute("currentUser");
 	                    <label for="sys_category">分类</label>
 	                        <select class="form-control"  id="subject" name="sys_category">
 	                    		<!--  遍历出来   -->
-	                    		<option value="" selected=""></option>
+	                    		<%--<option value="" selected=""></option>--%>
                             </select>
                          </div> 
-	                
-	                <div class="form-group">
-	                    <textarea class="form-control" id="message" name="summary"  placeholder="摘要" rows="5"></textarea>
-	                </div>
 	                
 	                <div class="form-group">
 	                    <textarea class="form-control" id="message" name="content"  placeholder="文章内容" rows="5"></textarea>
@@ -108,5 +105,8 @@ User u = (User)request.getSession().getAttribute("currentUser");
 		</div>
 	</div>
 	<% } %>
-	
+
+    <script src="js/ajax.js"></script>
+    <script src="js/addInvitation.js"></script>
+
 <jsp:include page="frame/Footer.jsp"></jsp:include>
