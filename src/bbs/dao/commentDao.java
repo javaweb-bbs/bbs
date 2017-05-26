@@ -17,7 +17,7 @@ public class commentDao {
     // 获取评论列表
     public static JSONArray list(Connection con, int invitationId) {
         JSONArray result = new JSONArray();
-        String search = "select * from comment where invitation = ?";
+        String search = "select *,username from comment, user where comment.answer_user = user.user_id and comment.invitation = ?";
         try {
             PreparedStatement ps = con.prepareStatement(search);
             ps.setInt((int) 1, invitationId);
@@ -29,6 +29,7 @@ public class commentDao {
                 comment.setInvitation(invitationId);
                 comment.setContent(rs.getString("content"));
                 comment.setAnswerUser(rs.getInt("answer_user"));
+                comment.setAuthorName(rs.getString("username"));
                 result.put(new JSONObject(comment));
             }
         } catch (SQLException e) {
