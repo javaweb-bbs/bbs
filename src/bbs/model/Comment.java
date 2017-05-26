@@ -9,6 +9,7 @@ public class Comment {
     private int invitation;
     private int answerUser;
     private String content;
+    private String authorName;
 
     public Comment() {
         super();
@@ -42,6 +43,8 @@ public class Comment {
         return content;
     }
 
+    public String getAuthorName() { return authorName; }
+
     public void setCommentId(int commentId) {
         this.commentId = commentId;
     }
@@ -60,5 +63,9 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public void setAuthorName(String authorName) {
+       this.authorName = authorName;
     }
 }

@@ -60,6 +60,7 @@ if(u==null){
              <ul class="nav pull-right">
                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">欢迎，<%=u.getUserName() %><b class="caret"></b></a>
                      <ul class="dropdown-menu">
+						 <input type="hidden" id="user-id" value="<%=u.getUserId() %>">
                          <li><a href="${pageContext.request.contextPath }/user?action=profile&id=<%=u.getUserId() %>"><i class="glyphicon glyphicon-cog"></i> 编辑个人信息</a></li>
                          <li class="divider"></li>                   
                          <li><a href="user?action=logout"><i class="glyphicon glyphicon-off"></i> 登出</a></li>
@@ -77,68 +78,41 @@ if(u==null){
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-9">
-				<h2>java学习</h2>
-				<p>
-					<i class="icon-user"></i> <a href="#">wk</a> | <i
-						class="icon-calendar"></i>
-					2017-04-01
-					| 阅读
-					10
-					次
-				</p>
-				<hr>
-				<p>java学习学习学习</p>
-				<hr>
+				<div class="invitation-detail">
 
-				
-				
-				
-				
-				<!-- the comments -->
-				
-				<p>
-					<i class="icon-user"></i><a href="" target="_blank">王凯</a> | <i class="icon-calendar"></i>2017-05-02
-				</p>
-				<p>不错不错</p>
-
+				</div>
 				<hr>
-				<!-- the comment box -->
-
+				<div class="comment-list">
+					<%--<div class="comemnt-item">--%>
+						<%--<p><i class="icon-user"></i><a href="" target="_blank">王凯</a> | <i class="icon-calendar"></i>2017-05-02</p>--%>
+						<%--<p>不错不错</p>--%>
+					<%--</div>--%>
+				</div>
 				<div class="well">
 					<h4>评论：</h4>
-
 					<%
-						if (null != u) {
-					               	userId = u.getUserId();
-					               }
+						if (null != u) { userId = u.getUserId();}
 					%>
-					<form role="form" name="comment" action="" method="post" onsubmit="return isValidate(comment)">
-						<div class="form-group">
-							<textarea class="form-control" rows="3" name="comment_content"></textarea>
-						</div>
-						<button type="submit" class="btn btn-primary">提交</button>
-					</form>
+					<div class="form-group">
+						<textarea class="comment-content form-control" rows="3" name="comment_content"></textarea>
+					</div>
+					<button type="submit" id="add-comment" class="btn btn-primary">提交</button>
 				</div>
-				
-				
 			</div>
-
 			<div class="col-lg-3">
 				<div class="well">
 					<h4>所属分类</h4>
 					<div class="row">
 						<div class="col-lg-6">
 							<ul class="list-unstyled">
-								
-								<li>java</li>
-								
+								<li class="get-type"></li>
 							</ul>
 						</div>
 					</div>
 				</div>
 				<div class="well">
 					<h4>相关文章列表：</h4>
-					<ul>
+					<ul class="relative-article">
 						<li><a href="" target="_blank">java</a></li>
 						<li><a href="" target="_blank">c</a></li>
 					</ul>
@@ -147,7 +121,6 @@ if(u==null){
 		</div>
 	</div>
 		<jsp:include page="frame/Footer.jsp"></jsp:include>
-
 		<script type="text/javascript">
 			function isValidate(comment) {
 				var comment_content = comment.comment_content.value;
@@ -161,3 +134,5 @@ if(u==null){
 				return true;
 			}
 		</script>
+	<script src="js/ajax.js"></script>
+	<script src="js/getDetail.js"></script>
