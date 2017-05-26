@@ -7,110 +7,162 @@ import java.sql.SQLException;
 
 import bbs.model.User;
 import bbs.util.DbUtil;
+import org.json.JSONObject;
 
 public class UserDao {
 
-	DbUtil dbUtil = new DbUtil();
-	
-	/**
-	 * 前台登录
-	 * @param con
-	 * @param user
-	 * @return
-	 * @throws Exception
-	 */
-	public User login(Connection con,User user)throws Exception{
-		User resultUser=null;
-		String sql="select * from user where username=? and password=? and is_admin=?";
-		PreparedStatement pstmt=con.prepareStatement(sql);
-		pstmt.setString(1,user.getUserName());
-		pstmt.setString(2,user.getPassWord());
-		pstmt.setInt(3, user.getIsAdmin());
-		ResultSet rs=pstmt.executeQuery();
-		if(rs.next()){
-			resultUser=new User();
-			resultUser.setUserId(rs.getInt("user_id"));
-			resultUser.setUserName(rs.getString("userName"));
-			resultUser.setPassWord(rs.getString("password"));
-			resultUser.setSex(rs.getInt("sex"));
-			resultUser.setEmail(rs.getString("email"));
-			resultUser.setIsAdmin(0);
-		}
-		return resultUser;
-	}
-	
-	/**
-	 * 注册
-	 * @param user
-	 * @return
-	 */
-	public int insertUser(Connection con,User user)throws Exception{
-		String insertsql="insert into user values(null,?,?,?,?,?)";
-		PreparedStatement pstmt=con.prepareStatement(insertsql);
-		pstmt=con.prepareStatement(insertsql);
-		pstmt.setString(1, user.getUserName());
-		pstmt.setString(2, user.getPassWord());
-		pstmt.setInt(3, user.getSex());
-		pstmt.setString(4, user.getEmail());
-		pstmt.setInt(5, 1);
-		return pstmt.executeUpdate();
-	}
-	
-	/**
-	 * 编辑个人信息
-	 * @param id
-	 * @return
-	 */
-	public User getUserById(Connection con,int id) {
-		User user=null;
-		String sql="select * from user where user_id in("+id+")";
-		System.out.println(id);
-		try {
-			con = dbUtil.getCon();
-			PreparedStatement pstmt = con.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery(sql);
-			if(rs.next())
-			{
-				user = new User();
-				user.setUserName(rs.getString("username"));
-				user.setPassWord(rs.getString("password"));
-				user.setSex(rs.getInt("sex"));
-				user.setEmail(rs.getString("email"));
-				user.setIsAdmin(rs.getInt("is_admin"));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally{
+	// 获取用户信息
+	public static JSONObject detail (Connection con, int userId) throws Exception {
+		JSONObject result = new JSONObject();
+		String search = "select * from user where user_id = ?";
+		PreparedStatement ps = null;
+		if (userId != 0) {
 			try {
-				dbUtil.closeCon(con);
-			} catch (Exception e) {
+				ps = con.prepareStatement(search);
+				ps.setInt((int) 1, userId);
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					User user = new User();
+					user.setUserId(rs.getInt("user_id"));
+					user.setUserName(rs.getString("username"));
+					user.setIsAdmin(rs.getBoolean("is_admin"));
+					user.setEmail(rs.getString("email"));
+					user.setSex(rs.getShort("sex"));
+					result = new JSONObject(user);
+				}
+			} catch (SQLException e) {
 				e.printStackTrace();
+			} finally {
+				ps.close();
+				new DbUtil().closeCon(con);
 			}
-		}	
-		return user;
+		} else {
+			result.put("msg", "the user is not existed");
+		}
+		return result;
+	}
+
+	// 登录
+	public static JSONObject login(Connection con,User user) throws Exception {
+		JSONObject result = new JSONObject();
+		String search = "select * from user where username=? and password=?";
+		PreparedStatement ps = null;
+		try {
+			ps = con.prepareStatement(search);
+			ps.setString((int) 1, user.getUserName());
+			ps.setString((int) 2, user.getPassWord());
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				result.put("status", "login success");
+			} else {
+				result.put("status", "user is not existed");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ps.close();
+			new DbUtil().closeCon(con);
+		}
+		return result;
 	}
 	
-	/**
-	 * 更改个人信息
-	 * @param con
-	 * @param user
-	 * @return
-	 * @throws Exception
-	 */
-	public int updateUser(Connection con,User user)throws Exception{
-		String sql="UPDATE user SET email=?,sex=? WHERE user_id=?";
-		PreparedStatement pstmt=con.prepareStatement(sql);
-		pstmt.setString(1,user.getEmail());
-		pstmt.setInt(2, user.getSex());
-		pstmt.setInt(3, user.getUserId());
-		return pstmt.executeUpdate();
+	// 注册
+	public static JSONObject register(Connection con,User user) throws Exception {
+		JSONObject result = new JSONObject();
+		String insertMes = "insert into user (username, password, email) values (?, ?, ?)";
+		PreparedStatement ps = null;
+
+		try {
+			ps = con.prepareStatement(insertMes);
+			ps.setString((int) 1, user.getUserName());
+			ps.setString((int) 2, user.getPassWord());
+			ps.setString((int) 3, user.getEmail());
+			int num = ps.executeUpdate();
+			if (num == 0) {
+				User userInfo = newUser(con, user.getUserName(), user.getPassWord());
+				result = new JSONObject(userInfo);
+			} else {
+				result.put("status", "register fail");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ps.close();
+			new DbUtil().closeCon(con);
+		}
+		return result;
+	}
+
+	// 获取注册用户信息
+	public static User newUser(Connection con, String username, String password) throws Exception {
+		User result = new User();
+		String search = "select * from user where username = ? and password = ?";
+		PreparedStatement ps = null;
+		try {
+			ps = con.prepareStatement(search);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				result.setUserId(rs.getInt("user_id"));
+				result.setSex(rs.getShort("sex"));
+				result.setEmail(rs.getString("email"));
+				result.setUserName(username);
+				result.setIsAdmin(rs.getBoolean("is_admin"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ps.close();
+			new DbUtil().closeCon(con);
+		}
+		return result;
 	}
 	
-	public int updatePassword(Connection con,User user)throws Exception{
-		String sql="UPDATE user SET password=? WHERE user_id=?";
-		PreparedStatement pstmt=con.prepareStatement(sql);
-		pstmt.setString(1,user.getPassWord());
-		pstmt.setInt(2, user.getUserId());
-		return pstmt.executeUpdate();
+	// 更改用户信息
+	public static JSONObject updateUser(Connection con,User user) throws Exception {
+		JSONObject result = new JSONObject();
+		String updateMes = "upadte user set email = ?, sex = ?, where user_id = ?";
+		PreparedStatement ps = null;
+		try {
+			ps = con.prepareStatement(updateMes);
+			ps.setString((int) 1, user.getEmail());
+			ps.setInt((int) 2, user.getSex());
+			ps.setInt((int) 3, user.getUserId());
+			int num = ps.executeUpdate();
+			if (num == 0) {
+				result.put("status", "update success");
+			} else {
+				result.put("status", "update fail");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ps.close();
+			new DbUtil().closeCon(con);
+		}
+		return result;
+	}
+
+	// 更改密码
+	public static JSONObject updatePassword(Connection con,User user) throws Exception {
+		JSONObject result = new JSONObject();
+		String updateMes = "upadte user set password = ? where user_id = ?";
+		PreparedStatement ps = null;
+		try {
+			ps = con.prepareStatement(updateMes);
+			ps.setString((int) 1, user.getPassWord());
+			ps.setInt((int) 3, user.getUserId());
+			int num = ps.executeUpdate();
+			if (num == 0) {
+				result.put("status", "update password success");
+			} else {
+				result.put("status", "update password fail");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ps.close();
+			new DbUtil().closeCon(con);
+		}
+		return result;
 	}
 }

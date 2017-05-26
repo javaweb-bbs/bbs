@@ -12,7 +12,7 @@ public class User {
 	private String passWord;
 	private int sex;
 	private String email;
-	private int isAdmin;
+	private Boolean isAdmin;
 	
 	public User() {
 		super();
@@ -31,14 +31,14 @@ public class User {
 		this.email = email;
 	}
 
-	public User(String userName, String passWord, int isAdmin) {
+	public User(String userName, String passWord, Boolean isAdmin) {
 		super();
 		this.userName = userName;
 		this.passWord = passWord;
 		this.isAdmin = isAdmin;
 	}
 	
-	public User(String userName, String passWord, int sex, String email, int isAdmin) {
+	public User(String userName, String passWord, int sex, String email, Boolean isAdmin) {
 		super();
 		this.userName = userName;
 		this.passWord = passWord;
@@ -78,10 +78,10 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getIsAdmin() {
+	public Boolean getIsAdmin() {
 		return isAdmin;
 	}
-	public void setIsAdmin(int isAdmin) {
+	public void setIsAdmin(Boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
 	
