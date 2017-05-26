@@ -89,7 +89,7 @@ String errorUpdateMsg = (String)request.getSession().getAttribute("errorUpdateMs
 	<% if (null != u) { %>
 	<div class="container">
 		<div class="btn-toolbar">
-		    <a class="btn btn-primary" href="">新建分类</a>
+		    <a class="btn btn-primary" href="addType.jsp">新建分类</a>
 		</div>
 		<div class="well">
 		    <table class="table">

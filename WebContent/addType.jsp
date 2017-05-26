@@ -1,10 +1,8 @@
 <%@ page language="java" import="java.util.*" import="bbs.model.*" 
 import="bbs.dao.*" pageEncoding="UTF-8"%>
+
 <%
 User u = (User)request.getSession().getAttribute("currentUser");
-//添加下面两行代码用于分页显示
-/* int curPage = (Integer)request.getAttribute("curPage");
-int totalPages = (Integer)request.getAttribute("totalPages"); */
  %>
 
 <jsp:include page="frame/Header.jsp"></jsp:include>
@@ -13,6 +11,7 @@ int totalPages = (Integer)request.getAttribute("totalPages"); */
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
+   
           <a class="navbar-brand" href="index.jsp">BBS</a>
         </div>
 
@@ -62,57 +61,41 @@ int totalPages = (Integer)request.getAttribute("totalPages"); */
           <%
           	}
           %>
+          
         </div>
       </div>
     </nav>
-  	
-	<%-- 删除评论的提示消息 --%>
-  	
-	<% if (null != u) { %>
-	<div class="container">	
-		<div class="well">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>评论内容</th>
-						<th>评论人</th>
-						<th>评论的文章标题</th>
-						<th>评论时间</th>
-						<th style="width: 50px;">操作</th>
-					</tr>
-				</thead>
-				<tbody>
-					
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td><a onClick="dele('')"><i
-								class="glyphicon glyphicon-remove"></i></a></td>
-					</tr>
-					
-				</tbody>
-			</table>
-		</div>
-		<div>
-		 <!-- pager -->
-          <ul class="pager">
-            <li class="previous"><a href="">&larr; 上一页</a></li>
-            <li class="next"><a href="">下一页  &rarr;</a></li>
-          </ul>
-		</div>
-		
-	</div>
-	<%} %>
-	
+    
+    <div class="container "> 
+		<ol class="breadcrumb">
+             <li><a href="">分类管理</a></li>
+             <li class="active">新建分类</li>
+        </ol>  
+         
+    	<form class="form-horizontal" name="add_category_form" action="">
+    	<div class="col-md-6">
+    	<div class="from-group">
+    		<label for="category_name">分类名：</label>
+    		<input class="form-control" id="category_name" name="category_name" type="text">
+    	</div>
+    	
+    	<div class="from-group">
+    		<button id="add_category_submit" type="submit" class="btn btn-primary">保存</button>
+    	</div>
+    	</div>
+    	</form>
+    </div>
 <jsp:include page="frame/Footer.jsp"></jsp:include>
 
 <script type="text/javascript">
-function dele(deleUrl) {
+function isValidate(form) {
+	var category_name = form.category_name.value;
 	
-	if (confirm("你确定要删除该评论吗？")) {
-		location.href = deleUrl;
+	if (category_name == "") {
+		alert("请填写分类名！");	
+		
+		return false;
 	}
+	return true;
 }
 </script>
