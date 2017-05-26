@@ -6,6 +6,7 @@ import java.util.Date;
 public class Invitation {
     private int invitationId;
     private int author;
+    private String authorName;
     private String title;
     private String content;
     private Boolean isEssence;
@@ -51,6 +52,10 @@ public class Invitation {
 
     public Date getDateCreate() { return dateCreate; }
 
+    public String getAuthorName() {
+        return authorName;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -77,5 +82,9 @@ public class Invitation {
 
     public void setDateCreate(Date dateCreate) { 
     	this.dateCreate = dateCreate; 
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 }

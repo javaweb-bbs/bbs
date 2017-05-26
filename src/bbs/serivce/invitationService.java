@@ -104,8 +104,4 @@ public class invitationService extends HttpServlet {
             e.printStackTrace();
         }
     }
-
-    public void destroy () {
-
-    }
 }

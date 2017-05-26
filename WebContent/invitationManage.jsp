@@ -84,45 +84,23 @@ String deleErrorMsg = (String)request.getSession().getAttribute("deleErrorMsg");
 				<thead>
 					<tr>
 						<th>标题</th>
-						<th>系统分类</th>
-						<th>个人分类</th>
-						<th>最近一次修改时间</th>
+						<th>分类</th>
+						<th>内容</th>
+						<th>修改时间</th>
 						<th style="width: 50px;">操作</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
-						<td><a
-							href=""></a></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td><a
-							href=""><i
-								class="glyphicon glyphicon-pencil"></i></a> <a
-							onClick="dele('')"><i
-								class="glyphicon glyphicon-remove"></i></a></td>
-					</tr>
+				<tbody class="invitation-list">
+
 				</tbody>
 			</table>
 		</div>
-		<div>
-			<!-- pager -->
-			<ul class="pager">
-				<%-- <% if (curPage > 1) { %> --%>
-				<li class="previous"><a
-					href="">&larr;
-						上一页</a></li>
-				<%-- <% } %>
-
-				<% if (curPage < totalPages) { %> --%>
-				<li class="next"><a
-					href="">下一页
-						&rarr;</a></li>
-				<%-- <% } %> --%>
-			</ul>
-		</div>
-	
+		<ul class="pager">
+			<li class="previous"><a>&larr;上一页</a></li>
+			<li class="next"><a>下一页&rarr;</a></li>
+		</ul>
 	</div>
+	<script src="js/ajax.js"></script>
+	<script src="js/invitationManage.js"></script>
 </body>
 <jsp:include page="frame/Footer.jsp"></jsp:include>

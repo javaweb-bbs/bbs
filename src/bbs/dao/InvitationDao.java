@@ -17,7 +17,8 @@ public class InvitationDao {
     public static JSONObject list (Connection con, int pageNum, int pageSize) {
         JSONObject result = new JSONObject();
         JSONArray invitations = new JSONArray();
-        String search = "select *, (select count(*) from invitation) as total from invitation limit ?,?";
+        String search = "select *, username, (select count(*) from invitation) as total from invitation,user where" +
+                        " user.user_id = invitation.author limit ?,?";
         int count = 0;
         try {
             PreparedStatement ps = con.prepareStatement(search);
@@ -37,6 +38,7 @@ public class InvitationDao {
                 resultInvitation.setType(rs.getString("type"));
                 resultInvitation.setEssence(rs.getBoolean("is_essence"));
                 resultInvitation.setDateCreate(rs.getDate("date_create"));
+                resultInvitation.setAuthorName(rs.getString("username"));
                 invitations.put(new JSONObject(resultInvitation));
                 count++;
             }
@@ -50,7 +52,8 @@ public class InvitationDao {
     // 获取帖子详情
     public static JSONObject detail(Connection con, int invitationId) {
         JSONObject result = new JSONObject();
-        String search = "select * from invitation where invitation_id = ?";
+        String search = "select *, username from invitation, user where invitation.author = user.user_id " +
+                        "and invitation.invitation_id = ?";
         try {
             PreparedStatement ps = con.prepareStatement(search);
             ps.setInt((int)1, invitationId);
@@ -64,6 +67,7 @@ public class InvitationDao {
                 invitation.setType(rs.getString("type"));
                 invitation.setEssence(rs.getBoolean("is_essence"));
                 invitation.setDateCreate(rs.getDate("date_create"));
+                invitation.setAuthorName(rs.getString("username"));
                 result = new JSONObject(invitation);
             }
         } catch (SQLException e) {
@@ -131,6 +135,31 @@ public class InvitationDao {
             } else {
                 JSONObject deleteComment =  commentDao.delete(con, 0, invitationId);
                 result.put("status", "delete success");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static JSONArray search(Connection con, String title) {
+        JSONArray result = new JSONArray();
+        String search = "select *, username from invitation, user where user.user_id = invitation.author and invitation.title like ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(search);
+            ps.setString((int) 1, title);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+               Invitation invitation = new Invitation();
+                invitation.setAuthor(rs.getInt("author"));
+                invitation.setInvitationId(rs.getInt("invitation_id"));
+                invitation.setTitle(rs.getString("title"));
+                invitation.setContent(rs.getString("content"));
+                invitation.setType(rs.getString("type"));
+                invitation.setEssence(rs.getBoolean("is_essence"));
+                invitation.setDateCreate(rs.getDate("date_create"));
+                invitation.setAuthorName(rs.getString("username"));
+                result.put(new JSONObject(invitation));
             }
         } catch (SQLException e) {
             e.printStackTrace();
