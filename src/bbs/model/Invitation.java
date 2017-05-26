@@ -52,6 +52,10 @@ public class Invitation {
 
     public Date getDateCreate() { return dateCreate; }
 
+    public String getAuthorName() {
+        return authorName;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
