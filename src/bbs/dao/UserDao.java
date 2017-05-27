@@ -53,7 +53,13 @@ public class UserDao {
 			ps.setString((int) 2, user.getPassWord());
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				result.put("status", "login success");
+				User info = new User();
+				info.setUserId(rs.getInt("user_id"));
+				info.setUserName(user.getUserName());
+				info.setEmail(rs.getString("email"));
+				info.setSex(rs.getInt("sex"));
+				info.setIsAdmin(rs.getBoolean("is_admin"));
+				result = new JSONObject(user);
 			} else {
 				result.put("status", "user is not existed");
 			}
