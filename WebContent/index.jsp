@@ -101,7 +101,7 @@
             <div class="row">
               <ul class="list-unstyled">
                 <li><a href="" target="_blank">c</a></li>
-                <li>c++</li>
+                <li><a href="" target="_blank">c++</a></li>
               </ul>
             </div>
           </div>
