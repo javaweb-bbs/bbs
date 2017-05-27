@@ -1,6 +1,7 @@
 package bbs.dao;
 
 import bbs.model.Invitation;
+import bbs.util.DbUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,14 +15,15 @@ import java.sql.SQLException;
  */
 public class InvitationDao {
     // 获取帖子列表
-    public static JSONObject list (Connection con, int pageNum, int pageSize) {
+    public static JSONObject list (Connection con, int pageNum, int pageSize) throws Exception {
         JSONObject result = new JSONObject();
         JSONArray invitations = new JSONArray();
         String search = "select *, username, (select count(*) from invitation) as total from invitation,user where" +
                         " user.user_id = invitation.author limit ?,?";
         int count = 0;
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = con.prepareStatement(search);
+            ps = con.prepareStatement(search);
             ps.setInt((int) 1, (pageNum - 1) * pageSize);
             ps.setInt((int) 2, pageSize);
 
@@ -46,16 +48,20 @@ public class InvitationDao {
             result.put("invitations", invitations);
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            ps.close();
+            new DbUtil().closeCon(con);
         }
         return result;
     }
     // 获取帖子详情
-    public static JSONObject detail(Connection con, int invitationId) {
+    public static JSONObject detail(Connection con, int invitationId) throws Exception {
         JSONObject result = new JSONObject();
         String search = "select *, username from invitation, user where invitation.author = user.user_id " +
                         "and invitation.invitation_id = ?";
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = con.prepareStatement(search);
+            ps = con.prepareStatement(search);
             ps.setInt((int)1, invitationId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -72,12 +78,15 @@ public class InvitationDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            ps.close();
+            new DbUtil().closeCon(con);
         }
         return result;
     }
 
     // 添加帖子
-    public static JSONObject add(Connection con, Invitation invitation) {
+    public static JSONObject add(Connection con, Invitation invitation) throws Exception {
         JSONObject result = new JSONObject();
         String message = "insert into invitation (author, title, is_essence, type, content) values (?, ?, ?, ?, ?)";
         PreparedStatement ps = null;
@@ -96,16 +105,20 @@ public class InvitationDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            ps.close();
+            new DbUtil().closeCon(con);
         }
         return result;
     }
 
     // 设置精华帖
-    public static JSONObject updateEssence(Connection con, Boolean isEssence, int invitationId) {
+    public static JSONObject updateEssence(Connection con, Boolean isEssence, int invitationId) throws Exception {
         JSONObject result = new JSONObject();
         String message = "update invitation set is_essence = ? where invitation_id = ?";
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = con.prepareStatement(message);
+            ps = con.prepareStatement(message);
             ps.setBoolean((int) 1, isEssence);
             ps.setInt((int) 2, invitationId);
             int num = ps.executeUpdate();
@@ -116,12 +129,15 @@ public class InvitationDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            ps.close();
+            new DbUtil().closeCon(con);
         }
         return result;
     }
 
     // 删除帖子
-    public static JSONObject delete(Connection con, int invitationId) {
+    public static JSONObject delete(Connection con, int invitationId) throws Exception {
         JSONObject result = new JSONObject();
         String deleteInvitation = "delete from invitation where invitation_id = ?";
 
@@ -138,15 +154,19 @@ public class InvitationDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            invitationPs.close();
+            new DbUtil().closeCon(con);
         }
         return result;
     }
 
-    public static JSONArray search(Connection con, String title) {
+    public static JSONArray search(Connection con, String title) throws Exception {
         JSONArray result = new JSONArray();
         String search = "select *, username from invitation, user where user.user_id = invitation.author and invitation.title like ?";
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = con.prepareStatement(search);
+            ps = con.prepareStatement(search);
             ps.setString((int) 1, title);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -163,6 +183,9 @@ public class InvitationDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            ps.close();
+            new DbUtil().closeCon(con);
         }
         return result;
     }

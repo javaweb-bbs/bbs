@@ -1,5 +1,6 @@
 package bbs.dao;
 
+import bbs.util.DbUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,27 +13,31 @@ import java.sql.SQLException;
  * Created by sjf on 5/24/17.
  */
 public class typeDao {
-    public static JSONArray list(Connection con) {
+    public static JSONArray list(Connection con) throws Exception {
         JSONArray result = new JSONArray();
         String search = "select * from invitation_type";
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = con.prepareStatement(search);
+            ps = con.prepareStatement(search);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 result.put(rs.getString("name"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            ps.close();
+            new DbUtil().closeCon(con);
         }
         return result;
     }
 
-    public static JSONObject add(Connection con, String type) {
+    public static JSONObject add(Connection con, String type) throws Exception {
         JSONObject result = new JSONObject();
         String message = "insert into invitation_type (name) values (?)";
-
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = con.prepareStatement(message);
+            ps = con.prepareStatement(message);
             ps.setString((int) 1, type);
             int num = ps.executeUpdate();
 
@@ -43,11 +48,14 @@ public class typeDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            ps.close();
+            new DbUtil().closeCon(con);
         }
         return result;
     }
 
-    public static JSONObject delete(Connection con, String type) {
+    public static JSONObject delete(Connection con, String type) throws Exception {
         JSONObject result = new JSONObject();
         String deleteType = "delete from invitation_type where name = ?";
 
@@ -63,6 +71,9 @@ public class typeDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            typePs.close();
+            new DbUtil().closeCon(con);
         }
         return result;
     }

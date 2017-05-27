@@ -21,7 +21,7 @@ import java.sql.Connection;
  */
 @WebServlet("/comment")
 public class commentService extends HttpServlet {
-    protected Connection con = new DbUtil().getCon();
+    protected DbUtil util = new DbUtil();
 
     public commentService() throws Exception {
     }
@@ -30,6 +30,7 @@ public class commentService extends HttpServlet {
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
         try {
+            Connection con = util.getCon();
             int invitationId = Integer.parseInt(req.getParameter("invitationId"));
             JSONArray comments = commentDao.list(con, invitationId);
             PrintWriter out = res.getWriter();
@@ -43,6 +44,7 @@ public class commentService extends HttpServlet {
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
         try {
+            Connection con = util.getCon();
             JSONObject params = getParams.get(req);
             Comment comment = new Comment();
             comment.setAnswerUser(params.getInt("answerUser"));
@@ -61,6 +63,7 @@ public class commentService extends HttpServlet {
         res.setCharacterEncoding("UTF-8");
         res.setContentType("application/json");
         try {
+            Connection con = util.getCon();
             JSONObject params = getParams.get(req);
             int commentId = params.getInt("commentId");
             JSONObject deleteMes = commentDao.delete(con, commentId, 0);

@@ -20,7 +20,7 @@ import java.sql.Connection;
  */
 @WebServlet("/type")
 public class typeService extends HttpServlet {
-    protected Connection con = new DbUtil().getCon();
+    protected DbUtil util = new DbUtil();
 
     public typeService() throws Exception {
     }
@@ -29,6 +29,7 @@ public class typeService extends HttpServlet {
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
         try {
+            Connection con = util.getCon();
             JSONArray types = typeDao.list(con);
             PrintWriter out = res.getWriter();
             out.print(types);
@@ -41,6 +42,7 @@ public class typeService extends HttpServlet {
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
         try {
+            Connection con = util.getCon();
             JSONObject params = getParams.get(req);
             String name = params.getString("name");
             JSONObject addResult = typeDao.add(con, name);
@@ -55,6 +57,7 @@ public class typeService extends HttpServlet {
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
         try {
+            Connection con = util.getCon();
             JSONObject params = getParams.get(req);
             String name = params.getString("name");
             JSONObject addResult = typeDao.delete(con, name);

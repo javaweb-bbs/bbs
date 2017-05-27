@@ -12,8 +12,9 @@ import bbs.dao.UserDao;
 import bbs.model.User;
 import bbs.util.DbUtil;
 import bbs.util.Stringutil;
+import org.json.JSONObject;
 
-@WebServlet("/user")
+@WebServlet("/admin")
 public class LoginServlet extends HttpServlet{
 	/**
 	 * 
@@ -43,11 +44,11 @@ public class LoginServlet extends HttpServlet{
 				request.getRequestDispatcher("Login.jsp").forward(request, response);
 				return;
 			}
-			User user=new User(username,password,0);
+			User user= new User(username, password, false);
 			Connection con=null;
 			try {
 				con=dbUtil.getCon();
-				User currentUser=userDao.login(con, user);
+				JSONObject currentUser=userDao.login(con, user);
 				if(currentUser==null){
 					request.setAttribute("error", "用户名或密码错误！");
 					request.getRequestDispatcher("Login.jsp").forward(request, response);
@@ -79,21 +80,22 @@ public class LoginServlet extends HttpServlet{
 			String username = request.getParameter("username");
 			String sex = request.getParameter("sex");
 			int sex_i=0;
-			if(sex.equals("男"))
-				sex_i=1;
-			else if(sex.equals("女"))
+			if(sex.equals("男")) {
+				sex_i = 1;
+			} else if(sex.equals("女")) {
 				sex_i=2;
-			else if(sex.equals("")||sex==null)
+			} else if(sex.equals("")||sex==null) {
 				sex_i=1;
+			}
 			String password = request.getParameter("password");
 			String email = request.getParameter("email");
 			DbUtil dbUtil = new DbUtil();
 			Connection con = null;
-			User user =new User(username,password,sex_i,email,1);
+			User user =new User(username,password,sex_i,email,true);
 			try {
 				con = dbUtil.getCon();
-				int insertNums = userDao.insertUser(con, user);
-				if (insertNums > 0) {
+				JSONObject insertNums = userDao.register(con, user);
+				if (insertNums.isNull("status")) {
 					request.getSession().setAttribute("succMsg", "注册成功！");
 					response.sendRedirect("Register.jsp");
 				} else {
@@ -112,10 +114,10 @@ public class LoginServlet extends HttpServlet{
 		}else if(action.equals("profile")){
 			int id = Integer.parseInt(request.getParameter("id"));
 			Connection con=null;
-			User user=new User();
+			JSONObject user=new JSONObject();
 			try{
 				con=dbUtil.getCon();
-				user=userDao.getUserById(con, id);
+				user=userDao.detail(con, id);
 			}catch(Exception e){
 				e.printStackTrace();
 			}finally{
@@ -144,8 +146,8 @@ public class LoginServlet extends HttpServlet{
 			User user=new User(userId,sex_i,email);
 			try {
 				con = dbUtil.getCon();
-				int delNums = userDao.updateUser(con, user);
-				if (delNums > 0) {
+				JSONObject delNums = userDao.updateUser(con, user);
+				if (delNums.get("status").equals("update success")) {
 					request.getSession().setAttribute("succMsg", "保存成功！");
 				} else {
 					request.getSession().setAttribute("errorMsg", "保存失败！");
@@ -168,8 +170,8 @@ public class LoginServlet extends HttpServlet{
 			User user=new User(userId,password);
 			try {
 				con = dbUtil.getCon();
-				int delNums = userDao.updatePassword(con, user);
-				if (delNums > 0) {
+				JSONObject delNums = userDao.updatePassword(con, user);
+				if (delNums.get("status").equals("update password success")) {
 					request.getSession().setAttribute("succMsg", "保存成功！");
 				} else {
 					request.getSession().setAttribute("errorMsg", "保存失败！");
