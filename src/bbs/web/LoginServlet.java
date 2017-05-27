@@ -126,7 +126,7 @@ public class LoginServlet extends HttpServlet{
 				}
 			}		
 			request.getSession().setAttribute("user", user);
-			request.getRequestDispatcher("Profile.jsp").forward(request, response);
+			response.sendRedirect("Profile.jsp");
 		}else if(action.equals("updateprofile")){
 			int userId = Integer.parseInt(request.getParameter("id"));
 			String email=request.getParameter("email");

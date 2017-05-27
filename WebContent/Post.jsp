@@ -83,10 +83,7 @@ if(u==null){
 				</div>
 				<hr>
 				<div class="comment-list">
-					<%--<div class="comemnt-item">--%>
-						<%--<p><i class="icon-user"></i><a href="" target="_blank">王凯</a> | <i class="icon-calendar"></i>2017-05-02</p>--%>
-						<%--<p>不错不错</p>--%>
-					<%--</div>--%>
+
 				</div>
 				<div class="well">
 					<h4>评论：</h4>

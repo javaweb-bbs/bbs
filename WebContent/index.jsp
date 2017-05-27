@@ -95,24 +95,16 @@
                 </div>
               </div>
           </div>
-          <%--<div class="well">--%>
-            <%--<h4>本周活跃版主</h4>--%>
-            <%--<div class="row">--%>
-              <%--<ul class="list-unstyled">--%>
-                <%--<li><a href="" target="_blank"></a></li>--%>
-                <%--<li>暂无排名，sorry......</li>--%>
-              <%--</ul>--%>
-            <%--</div>--%>
-          <%--</div>--%>
-          <%--<div class="well">--%>
-            <%--<h4>精华TOP10</h4>--%>
-            <%--<div class="row">--%>
-              <%--<ul class="list-unstyled">--%>
-                <%--<li><a href="" target="_blank"></a></li>--%>
-                <%--<li>暂无排名，sorry......</li>--%>
-              <%--</ul>--%>
-            <%--</div>--%>
-          <%--</div>--%>
+          
+          <div class="well">
+            <h4>精华TOP10</h4>
+            <div class="row">
+              <ul class="list-unstyled">
+                <li><a href="" target="_blank">c</a></li>
+                <li>c++</li>
+              </ul>
+            </div>
+          </div>
           </div>
       </div>
     </div>
