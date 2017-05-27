@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding:0;
+}
+
+.container {
+    background-image: url('../img/zhihu-wrapper.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 300px;
+    height: 250px;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.title {
+    color: #4285f4;
+    font-size: 20px;
+}
+
+.login-container input {
+    width: 250px;
+    padding-left: 10px;
+    height: 30px;
+    border: 0;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    outline: none;
+}
+
+.submit {
+    width: 250px;
+    height: 30px;
+    border: 1px solid #4285f4;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    background: #4285f4;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+
+
+

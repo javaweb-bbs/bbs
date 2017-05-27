@@ -24,6 +24,8 @@ public class userService extends HttpServlet {
 
     // 获取用户信息
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
         try {
             Connection con = util.getCon();
             if (req.getParameter("userId") != null) {
@@ -39,6 +41,8 @@ public class userService extends HttpServlet {
 
     // 注册
     public void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
         try {
             Connection con = util.getCon();
             JSONObject params = getParams.get(req);
@@ -56,6 +60,8 @@ public class userService extends HttpServlet {
 
     // 登录和更改信息
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
         try {
             Connection con = util.getCon();
             JSONObject params = getParams.get(req);
