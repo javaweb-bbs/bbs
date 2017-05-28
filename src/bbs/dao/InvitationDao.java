@@ -43,7 +43,6 @@ public class InvitationDao {
             }
         }
         search += "limit ?,?";
-        System.out.println("search is " + search);
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(search);

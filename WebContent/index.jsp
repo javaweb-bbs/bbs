@@ -52,14 +52,12 @@
         <div class="col-lg-4">
           <div class="well">
             <h4>搜索站内帖子</h4>
-            <form name="search_form">
             <div class="input-group">
-              <input type="text" class="form-control" name="q">
-              <span class="input-group-btn">
+              <input type="text" class="form-control search-invitation" placeholder="帖子标题">
+              <span class="input-group-btn search-btn">
                 <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
               </span>
             </div>
-            </form>
           </div>
           <div class="well">
             <h4>帖子分类</h4>

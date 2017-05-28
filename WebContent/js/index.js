@@ -11,6 +11,8 @@ window.onload = function () {
     var username = document.querySelector('.username')
     var loginOut = document.querySelector('.login-out')
     var manageInvitation = document.querySelector('.manage-invitation')
+    var searchInvitation = document.querySelector('.search-invitation')
+    var searchBtn = document.querySelector('.search-btn')
     function renderList(data) {
         var list = document.querySelector('.list')
         list.innerHTML = ''
@@ -28,6 +30,20 @@ window.onload = function () {
                 listItem.innerHTML = html
                 list.appendChild(listItem)
             }
+        }
+    }
+
+    searchInvitation.onkeydown = function (event) {
+        var searchMes = searchInvitation.value
+        if (event.keyCode == '13' && searchMes) {
+            ajax("GET", "invitation?title=" + searchMes, null, renderList)
+        }
+    }
+
+    searchBtn.onclick = function () {
+        var searchMes = searchInvitation.value
+        if (searchMes) {
+            ajax("GET", "invitation?title=" + searchMes, null, renderList)
         }
     }
 
@@ -79,7 +95,7 @@ window.onload = function () {
     }
 
     function init() {
-        ajax("GET", "invitation?user_id=1", null, renderList);
+        ajax("GET", "invitation", null, renderList);
         ajax("GET", "type", null, renderType);
         var user = localStorage.getItem("user")
         if (user) {
