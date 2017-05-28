@@ -9,23 +9,49 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by sjf on 5/24/17.
  */
 public class InvitationDao {
     // 获取帖子列表
-    public static JSONObject list (Connection con, int pageNum, int pageSize) throws Exception {
+    public static JSONObject list (Connection con, JSONObject filter) throws Exception {
         JSONObject result = new JSONObject();
         JSONArray invitations = new JSONArray();
         String search = "select *, username, (select count(*) from invitation) as total from invitation,user where" +
-                        " user.user_id = invitation.author limit ?,?";
+                        " user.user_id = invitation.author ";
+        ArrayList<String> filterValues = new ArrayList<>();
         int count = 0;
+        int filterCount = 0;
+        int pageNum = 1;
+        int pageSize = 10;
+        if (filter != null) {
+            pageNum = Integer.parseInt(filter.getString("pageNum"));
+            pageSize = Integer.parseInt(filter.getString("pageSize"));
+            filter.remove("pageSize");
+            filter.remove("pageNum");
+            Iterator<String> iterator = filter.keys();
+            while (iterator.hasNext()) {
+                filterCount++;
+                String key = iterator.next();
+                String value = filter.getString(key);
+                search += "and " + key + "= ?";
+                filterValues.add(value);
+            }
+        }
+        search += "limit ?,?";
+        System.out.println("search is " + search);
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(search);
-            ps.setInt((int) 1, (pageNum - 1) * pageSize);
-            ps.setInt((int) 2, pageSize);
+            for (int i = 0; i < filterCount; i++) {
+                ps.setString((int) i + 1, filterValues.get(i));
+            }
+            ps.setInt((int) filterCount + 1, (pageNum - 1) * pageSize);
+            ps.setInt((int) filterCount + 2, pageSize);
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

@@ -3,6 +3,7 @@ package bbs.serivce;
 import bbs.dao.InvitationDao;
 import bbs.model.Invitation;
 import bbs.util.DbUtil;
+import bbs.util.Stringutil;
 import bbs.util.getParams;
 import org.json.JSONObject;
 
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.sql.Connection;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by sjf on 5/24/17.
@@ -41,13 +44,21 @@ public class invitationService extends HttpServlet {
             } else {
                 int pageNum = 1;
                 int pageSize = 10;
-                if (req.getParameter("pageNum") != null) {
-                    pageNum = Integer.parseInt(req.getParameter("pageNum"));
+                JSONObject filter = new JSONObject();
+                Map<String, String[]> params = req.getParameterMap();
+                Iterator<Map.Entry<String, String[]>> entries = params.entrySet().iterator();
+                while (entries.hasNext()) {
+                    Map.Entry<String, String[]> entry = entries.next();
+                    System.out.println("Key = " + entry.getKey() + ", Value = " + Stringutil.arrToString(entry.getValue()));
+                    filter.put(entry.getKey(), Stringutil.arrToString(entry.getValue()));
                 }
-                if (req.getParameter("pageSize") != null) {
-                    pageSize = Integer.parseInt(req.getParameter("pageSize"));
+                if (filter.isNull("pageNum")) {
+                    filter.put("pageNum", String.valueOf(pageNum));
                 }
-                JSONObject invitationList = InvitationDao.list(con, pageNum, pageSize);
+                if (filter.isNull("pageSize")) {
+                    filter.put("pageSize", String.valueOf(pageSize));
+                }
+                JSONObject invitationList = InvitationDao.list(con, filter);
                 out.print(invitationList);
             }
         } catch (Exception e) {

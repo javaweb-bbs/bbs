@@ -79,7 +79,7 @@ window.onload = function () {
     }
 
     function init() {
-        ajax("GET", "invitation", null, renderList);
+        ajax("GET", "invitation?user_id=1", null, renderList);
         ajax("GET", "type", null, renderType);
         var user = localStorage.getItem("user")
         if (user) {
