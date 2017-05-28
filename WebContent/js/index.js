@@ -6,11 +6,7 @@ window.onload = function () {
     var currentPage = 1
     var nextBtn = document.querySelector('.next')
     var prevBtn = document.querySelector('.previous')
-    var loginSuccess = document.querySelector('.login-success')
-    var noLogin = document.querySelector('.no-login')
-    var username = document.querySelector('.username')
-    var loginOut = document.querySelector('.login-out')
-    var manageInvitation = document.querySelector('.manage-invitation')
+
     var searchInvitation = document.querySelector('.search-invitation')
     var searchBtn = document.querySelector('.search-btn')
     function renderList(data) {
@@ -97,26 +93,9 @@ window.onload = function () {
         prevPage()
     }
 
-    loginOut.onclick = function () {
-        localStorage.removeItem("user")
-        location.reload()
-    }
-
     function init() {
         ajax("GET", "invitation", null, renderList);
         ajax("GET", "type", null, renderType);
-        var user = localStorage.getItem("user")
-        if (user) {
-            user = JSON.parse(user)
-            noLogin.style.display = 'none'
-            loginSuccess.style.display = 'block'
-            manageInvitation.style.display = 'block'
-            username.innerHTML = '欢迎,' + user.userName + '<b class="caret"></b>'
-        } else {
-            noLogin.style.display = 'block'
-            loginSuccess.style.display = 'none'
-            manageInvitation.style.display = 'none'
-        }
     }
 
     init();
