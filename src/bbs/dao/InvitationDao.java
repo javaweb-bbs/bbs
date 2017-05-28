@@ -44,7 +44,6 @@ public class InvitationDao {
                 invitations.put(new JSONObject(resultInvitation));
                 count++;
             }
-            System.out.println("invitations is " + invitations);
             result.put("invitations", invitations);
         } catch (SQLException e) {
             e.printStackTrace();
