@@ -46,16 +46,20 @@ window.onload = function () {
     }
 
     addComment.onclick = function () {
-        var content = document.querySelector('.comment-content').value
-        console.log(document.querySelector('#user-id'))
-        var userId = document.querySelector('#user-id').value
-        if (content) {
-            commentMes.content = content
-            commentMes.answerUser = +userId
-            commentMes.invitation = +invitationId
-            ajax('PUT', 'comment', JSON.stringify(commentMes), addCb)
+        var user = localStorage.getItem('user')
+        if (user) {
+            var userId = JSON.parse(user).userId
+            var content = document.querySelector('.comment-content').value
+            if (content) {
+                commentMes.content = content
+                commentMes.answerUser = +userId
+                commentMes.invitation = +invitationId
+                ajax('PUT', 'comment', JSON.stringify(commentMes), addCb)
+            } else {
+                alert("评论内容必填")
+            }
         } else {
-            alert("评论内容必填")
+            alert('请先登录在进行评论')
         }
     }
 
