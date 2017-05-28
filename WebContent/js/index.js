@@ -36,14 +36,22 @@ window.onload = function () {
     searchInvitation.onkeydown = function (event) {
         var searchMes = searchInvitation.value
         if (event.keyCode == '13' && searchMes) {
-            ajax("GET", "invitation?title=" + searchMes, null, renderList)
+            var message = {
+                action: 'search',
+                title: searchMes
+            }
+            ajax("POST", "invitation", JSON.stringify(message), renderList)
         }
     }
 
     searchBtn.onclick = function () {
         var searchMes = searchInvitation.value
         if (searchMes) {
-            ajax("GET", "invitation?title=" + searchMes, null, renderList)
+            var message = {
+                action: 'search',
+                title: searchMes
+            }
+            ajax("POST", "invitation", JSON.stringify(message), renderList)
         }
     }
 

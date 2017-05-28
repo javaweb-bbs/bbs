@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by sjf on 5/24/17.
@@ -185,26 +184,36 @@ public class InvitationDao {
         return result;
     }
 
-    public static JSONArray search(Connection con, String title) throws Exception {
-        JSONArray result = new JSONArray();
-        String search = "select *, username from invitation, user where user.user_id = invitation.author and invitation.title like ?";
+    public static JSONObject search(Connection con, String title) throws Exception {
+        JSONObject result = new JSONObject();
+        String search = "select *, username,(select count(*) from invitation where title like ?) as total from invitation, user " +
+                "where user.user_id = invitation.author and invitation.title like ?";
         PreparedStatement ps = null;
+        int count = 0;
         try {
             ps = con.prepareStatement(search);
-            ps.setString((int) 1, title);
+            ps.setString((int) 1, "%" + title + "%");
+            ps.setString((int) 2, "%" + title + "%");
             ResultSet rs = ps.executeQuery();
+            JSONArray invitations = new JSONArray();
+            result.put("total", 0);
             while (rs.next()) {
-               Invitation invitation = new Invitation();
-                invitation.setAuthor(rs.getInt("author"));
-                invitation.setInvitationId(rs.getInt("invitation_id"));
-                invitation.setTitle(rs.getString("title"));
-                invitation.setContent(rs.getString("content"));
-                invitation.setType(rs.getString("type"));
-                invitation.setEssence(rs.getBoolean("is_essence"));
-                invitation.setDateCreate(rs.getDate("date_create"));
-                invitation.setAuthorName(rs.getString("username"));
-                result.put(new JSONObject(invitation));
+                Invitation searchInvitation = new Invitation();
+                searchInvitation.setAuthor(rs.getInt("author"));
+                searchInvitation.setInvitationId(rs.getInt("invitation_id"));
+                searchInvitation.setTitle(rs.getString("title"));
+                searchInvitation.setContent(rs.getString("content"));
+                searchInvitation.setType(rs.getString("type"));
+                searchInvitation.setEssence(rs.getBoolean("is_essence"));
+                searchInvitation.setDateCreate(rs.getDate("date_create"));
+                searchInvitation.setAuthorName(rs.getString("username"));
+                invitations.put(new JSONObject(searchInvitation));
+                if (count == 0) {
+                    result.put("total", rs.getInt("total"));
+                }
+                count++;
             }
+            result.put("invitations", invitations);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
