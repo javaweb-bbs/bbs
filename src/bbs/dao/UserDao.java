@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import bbs.model.User;
 import bbs.util.DbUtil;
+
 import org.json.JSONObject;
 
 public class UserDao {
@@ -171,4 +171,5 @@ public class UserDao {
 		}
 		return result;
 	}
+	
 }

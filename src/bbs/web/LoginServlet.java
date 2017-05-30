@@ -82,7 +82,7 @@ public class LoginServlet extends HttpServlet{
 			int sex_i=0;
 			if(sex.equals("男")) {
 				sex_i = 1;
-			} else if(sex.equals("女")) {
+			}else if(sex.equals("女")) {
 				sex_i=2;
 			} else if(sex.equals("")||sex==null) {
 				sex_i=1;
@@ -128,7 +128,7 @@ public class LoginServlet extends HttpServlet{
 				}
 			}		
 			request.getSession().setAttribute("user", user);
-			request.getRequestDispatcher("Profile.jsp").forward(request, response);
+			response.sendRedirect("Profile.jsp");
 		}else if(action.equals("updateprofile")){
 			int userId = Integer.parseInt(request.getParameter("id"));
 			String email=request.getParameter("email");

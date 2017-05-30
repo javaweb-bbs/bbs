@@ -6,7 +6,7 @@
           <div class="col-lg-12">
             <p >
             Copyright &copy; 2017 &middot; UI based on Bootstrap 3 
-                                  &middot; <a href="${pageContext.request.contextPath}/AdminLogin.jsp" target="_blank">admin</a>
+                                  &middot; <a href="${pageContext.request.contextPath}/admin/AdminLogin.jsp" target="_blank">admin</a>
                                   &middot;访问人数：<%=(Integer)session.getAttribute("num") %>                                                 
             </p>
           </div>

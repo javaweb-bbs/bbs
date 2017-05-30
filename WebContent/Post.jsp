@@ -42,4 +42,3 @@
 <jsp:include page="frame/Footer.jsp"></jsp:include>
 <script src="js/ajax.js"></script>
 <script src="js/getDetail.js"></script>
-</body>
