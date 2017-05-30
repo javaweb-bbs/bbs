@@ -1,14 +1,17 @@
 <%@ page language="java" import="java.util.*" import="bbs.model.*" import="bbs.dao.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	User admin = (User)request.getSession().getAttribute("admin");
+	List<Invitation> inList = (List<Invitation>)request.getAttribute("invitation");
 
-List<Invitation> artList = (List<Invitation>)request.getAttribute("artList");
+	String deleSuccMsg = (String)request.getAttribute("deleSuccMsg");	//删除帖子消息
+	String deleErrorMsg = (String)request.getAttribute("deleErrorMsg");
+	
+	String updateSuccMsg = (String)request.getAttribute("updateSuccMsg");	//设置精华帖子
+	String updateErrorMsg = (String)request.getAttribute("updateErrorMsg");
 
-String deleSuccMsg = (String)request.getSession().getAttribute("deleSuccMsg");	//删除文章消息
-String deleErrorMsg = (String)request.getSession().getAttribute("deleErrorMsg");
-
-int curPage = (Integer)request.getAttribute("curPage");
-int totalPages = (Integer)request.getAttribute("totalPages");
+	int curPage = (Integer)request.getAttribute("currentP");
+	int totalPages = (Integer)request.getAttribute("pageCount");
 %>
 
 
@@ -22,19 +25,17 @@ int totalPages = (Integer)request.getAttribute("totalPages");
       <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <a class="navbar-brand" href="admin/index.jsp">J2EE博客管理系统</a>
+          <a class="navbar-brand" href="">BBS管理系统</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
-            <li><a href="admin/index.jsp"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a></li>
-            <li><a href="admin.html?action=useradmin"><i class="glyphicon glyphicon-cog"></i> 用户管理</a></li>
-            <li  class="active"><a href="admin.html?action=SysArticalAdmin"><i class="glyphicon glyphicon-cog"></i> 文章管理</a></li>
-            <li><a href="admin.html?action=SysCategoryAdmin"><i class="glyphicon glyphicon-edit"></i> 分类管理</a></li>
-            
+            <li class="active"><a href="${pageContent.request.contentPath }admin.html?action=index"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a></li>
+            <li><a href="${pageContent.request.contentPath }admin.html?action=useradmin"><i class="glyphicon glyphicon-cog"></i> 用户管理</a></li>
+            <li><a href="${pageContent.request.contentPath }admin.html?action=InvitationAdmin"><i class="glyphicon glyphicon-cog"></i> 帖子管理</a></li>
+            <!-- <li><a href=""><i class="glyphicon glyphicon-edit"></i> 分类管理</a></li> -->
           </ul>
-
           <ul class="nav navbar-nav navbar-right navbar-user">
             <li class="dropdown user-dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> <%=admin.getUserName()%> <b class="caret"></b></a>
@@ -55,8 +56,8 @@ int totalPages = (Integer)request.getAttribute("totalPages");
          <div class="col-lg-12">
            <br>
            <ol class="breadcrumb">
-           <li><a href="admin/index.jsp"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a></li>
-             <li class="active"><i class="glyphicon glyphicon-edit"></i> 文章管理</li>
+           <li><a href="${pageContent.request.contentPath }admin.html?action=index"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a></li>
+             <li class="active"><i class="glyphicon glyphicon-edit"></i> 帖子管理</li>
            </ol>
          </div>  
        </div>
@@ -70,11 +71,7 @@ int totalPages = (Integer)request.getAttribute("totalPages");
 	  		</div>
 	  	</div>
 	  	<%
-	  		request.getSession().removeAttribute("deleSuccMsg");
 	  		  	   }
-	  	%>
-	  	
-	  	<%
 	  		  		if (null != deleErrorMsg) {
 	  		  	%>
 	  	<div class="row">
@@ -83,7 +80,26 @@ int totalPages = (Integer)request.getAttribute("totalPages");
 	  		</div>
 	  	</div>
 	  	<%
-	  		request.getSession().removeAttribute("deleErrorMsg"); 
+	  		  	   }
+	  	%>
+	  	<%
+       			if (null != updateSuccMsg) {
+       		%>
+	  	<div class="row">
+         	<div class="col-lg-12">
+	  		<div class="alert alert-success"><%=updateSuccMsg%>返回<a href="${pageContent.request.contentPath }index.jsp">首页</a>查看</div>
+	  		</div>
+	  	</div>
+	  	<%
+	  		  	   }
+	  		  		if (null != updateErrorMsg) {
+	  		  	%>
+	  	<div class="row">
+         	<div class="col-lg-12">
+	  		<div class="alert alert-error"><%=updateErrorMsg%></div>
+	  		</div>
+	  	</div>
+	  	<%
 	  		  	   }
 	  	%>
 			
@@ -97,54 +113,55 @@ int totalPages = (Integer)request.getAttribute("totalPages");
                     <th>文章标题 </th>
                     <th>作者</th>
                     <th>发布时间</th>
+                    <th style="width: 50px;">精华</th>
                     <th style="width: 50px;">操作 </th>
                   </tr>
                 </thead>
            
-                <%-- <tbody>
-				<%
-					if ((artList != null) && (artList.size() > 0)) {
-							for (Article art : artList) {
-								if (0 == art.getIsDelete()) {
-									String deleUrl = basePath
-											+ "admin.html?action=DeleteSysArtical&artId="
-											+ art.getId();
-
-									//UserDaoImpl uDao = new UserDaoImpl();
-									//User u = uDao.getUserById(art.getUserId());
+                <tbody>
+                <%
+					for (int i = 0; i < inList.size(); i++) {
+						Invitation inv = inList.get(i);
 				%>
 				<tr>
-                    <td>
-                    <a href="<%=basePath%>comment.html?action=post&artId=<%=art.getId() %>&userId=<%=art.getUserId() %>" target="_blank">
-                    <%=art.getTitle() %></a></td>
-                    <td><%=art.getUsername() %></td>
-                    <td><%=art.getPublishTime() %></td>
-                    <td>
-		              <a onClick="dele('<%=deleUrl %>')"><i class="glyphicon glyphicon-floppy-remove"></i></a>
-                    </td>
-                  </tr>
-     		    
-     		    <%          }  
-     		            }
-     		        } else { %>
-     		    <%="获取系统分类失败！" %>
-     		    <% } %>
-                </tbody> --%>
+					<td><%=inv.getTitle()%></td>
+					<td><%=inv.getAuthorName()%></td>
+					<td><%=inv.getDateCreate()%></td>
+					<td><a href="${pageContext.request.contextPath }/admin.html?action=goodInvitation&id=<%=inv.getInvitationId()%>">精华</a></td>
+					<td><a href="${pageContext.request.contextPath }/admin.html?action=deleteInvitation&id=<%=inv.getInvitationId()%>"><i class="glyphicon glyphicon-floppy-remove"></i></a></td>
+				</tr>
+				<%
+					} 
+				%>
+				
+                </tbody>
               </table>
             </div>
           </div>
         </div>
         
         <!-- pager -->
-          <%-- <ul class="pager">
-          	<% if (curPage > 1) { %>
-            <li class="previous"><a href="<%=basePath%>admin.html?action=SysArticalAdmin&curPage=<%=(curPage-1)%>">&larr; 上一页</a></li>
-            <% } %>
-            
-            <% if (curPage < totalPages) { %>
-            <li class="next"><a href="<%=basePath%>admin.html?action=SysArticalAdmin&curPage=<%=(curPage+1)%>">下一页  &rarr;</a></li>
-            <% } %>
-          </ul> --%>
+          <ul class="pager">
+						<%
+							if (curPage > 1) {
+						%>
+						<li class="previous"><a
+							href="${pageContext.request.contextPath }/admin.html?action=InvitationAdmin&curPage=<%=(curPage - 1)%>">&larr;
+								上一页</a></li>
+						<%
+							}
+						%>
+
+						<%
+							if (curPage < totalPages) {
+						%>
+						<li class="next"><a
+							href="${pageContext.request.contextPath }/admin.html?action=InvitationAdmin&curPage=<%=(curPage + 1)%>">下一页
+								&rarr;</a></li>
+						<%
+							}
+						%>
+					</ul>
         
 		</div>
     </div>

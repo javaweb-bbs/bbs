@@ -2,6 +2,9 @@
 
 <%
 	User admin = (User) request.getSession().getAttribute("admin");
+	int totalUserCount = (Integer)request.getAttribute("totalUserCount");
+	int totalInvitationCount = (Integer)request.getAttribute("totalInvitationCount");
+	int totalCommentCount = (Integer)request.getAttribute("totalCommentCount");
 %>
 <jsp:include page="frame/Header.jsp"></jsp:include>
 <%
@@ -17,11 +20,10 @@
 
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
-            <li class="active"><a href="${pageContent.request.contentPath }admin/UserIndex.jsp"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a></li>
+            <li class="active"><a href="${pageContent.request.contentPath }admin.html?action=index"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a></li>
             <li><a href="${pageContent.request.contentPath }admin.html?action=useradmin"><i class="glyphicon glyphicon-cog"></i> 用户管理</a></li>
-            <li><a href="admin.html?action=InvitationAdmin"><i class="glyphicon glyphicon-cog"></i> 文章管理</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-edit"></i> 分类管理</a></li>
-            
+            <li><a href="${pageContent.request.contentPath }admin.html?action=InvitationAdmin"><i class="glyphicon glyphicon-cog"></i> 帖子管理</a></li>
+            <li><a href="${pageContent.request.contentPath }admin.html?action=TypeAdmin"><i class="glyphicon glyphicon-edit"></i> 分类管理</a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
@@ -47,7 +49,7 @@
             </ol>
             
           <div class="row">
-	        <div class="col-lg-3">
+	        <!-- <div class="col-lg-3">
 	            <div class="panel panel-info">
 	              <div class="panel-heading">
 	                <div class="row">
@@ -61,7 +63,7 @@
 	                </div>
 	              </div>
 	            </div>
-            </div>
+            </div> -->
             
             <div class="col-lg-3" >
 	            <div class="panel panel-success">
@@ -71,8 +73,8 @@
 	                    <i class="glyphicon glyphicon-edit"></i>
 	                  </div>
 	                  <div class="col-xs-6 text-right">
-	                    <p class="announcement-heading"></p>
-	                    <p class="announcement-text">文章总数</p>
+	                    <p class="announcement-heading"><%=totalInvitationCount %></p>
+	                    <p class="announcement-text">帖子总数</p>
 	                  </div>
 	                </div>
 	              </div>
@@ -87,7 +89,7 @@
                     <i class="glyphicon glyphicon-envelope"></i>
                   </div>
                   <div class="col-xs-6 text-right">
-                    <p class="announcement-heading"></p>
+                    <p class="announcement-heading"><%=totalCommentCount %></p>
                     <p class="announcement-text">评论总数</p>
                   </div>
                 </div>
@@ -104,8 +106,8 @@
              		  <i class="glyphicon glyphicon-user"></i>
                   </div>
                   <div class="col-xs-6 text-right">
-                    <p class="announcement-heading"></p>
-                    <p class="announcement-text">注册会员数</p>
+                    <p class="announcement-heading"><%=totalUserCount %></p>
+                    <p class="announcement-text">注册用户数</p>
                   </div>
                 </div>
               </div>
@@ -113,10 +115,8 @@
           </div>
                       
            </div>
-
          </div>
         </div>
-
     </div>
     </div>
 <%
