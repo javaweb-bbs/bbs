@@ -1,6 +1,7 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*,bbs.model.*" pageEncoding="utf-8"%>
 
 <%
+User u=(User)request.getSession().getAttribute("admin");
 String errorMsg = (String)request.getSession().getAttribute("msg");
 String logoutMsg = (String)request.getSession().getAttribute("logoutMsg");
 %>
@@ -20,13 +21,12 @@ String logoutMsg = (String)request.getSession().getAttribute("logoutMsg");
          <a class="navbar-brand" href="index.jsp">BBS论坛</a>
        </div>
 
-       <!-- Collect the nav links, forms, and other content for toggling -->
        <div class="collapse navbar-collapse navbar-ex1-collapse">
          <ul class="nav navbar-nav">
            <li><a href="index.jsp" target="_blank">访问网站首页</a></li>
          </ul>        
-       </div><!-- /.navbar-collapse -->
-     </div><!-- /.container -->
+       </div>
+     </div>
    </nav>
 
 	<% if (null != errorMsg) { %>		<%-- 登录验证失败提示 --%>

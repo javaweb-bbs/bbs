@@ -12,3 +12,4 @@
     <link href="${pageContext.request.contextPath}/bootstrap/css/blog-home.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/bootstrap/js/jquery-2.1.1.js"></script>
   </head>
+  

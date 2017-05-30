@@ -2,6 +2,7 @@ package bbs.web;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,20 +10,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import bbs.dao.AdminDao;
+import bbs.model.Invitation;
 import bbs.model.User;
 import bbs.util.DbUtil;
+import bbs.util.PageBean;
 
 @WebServlet("/admin.html")
 public class AdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     Connection con=null;
     DbUtil dbUtil =new DbUtil();
+    AdminDao adminDao=new AdminDao();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.doPost(request, response);
 	}
 
-	
 	@SuppressWarnings("unused")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -36,7 +41,7 @@ public class AdminServlet extends HttpServlet {
 				response.sendRedirect("AdminLogin.jsp");
 			} else {
 				request.getSession().setAttribute("admin", admin);
-				request.getRequestDispatcher("/admin/UserIndex.jsp").forward(request, response);
+				response.sendRedirect("admin.html?action=index");
 			}
 		}else if(action.equals("logout")){
 			HttpSession session = request.getSession(false);
@@ -47,12 +52,138 @@ public class AdminServlet extends HttpServlet {
 			request.getSession().setAttribute("logoutMsg", "已退出登录！");
 			response.sendRedirect("AdminLogin.jsp");
 			
+		}else if(action.equals("index")){		
+			int totalUserCount = adminDao.getUserTotalRecords();
+			request.setAttribute("totalUserCount", totalUserCount);
+			int totalInvitationCount=adminDao.getTotalRecords();
+			request.setAttribute("totalInvitationCount", totalInvitationCount);
+			int totalCommentCount=adminDao.getCommentTotalRecords();
+			request.setAttribute("totalCommentCount", totalCommentCount);
+			request.getRequestDispatcher("admin/UserIndex.jsp").forward(request, response);
 		}else if(action.equals("useradmin")){	
-			
+			request.setCharacterEncoding("utf-8");
+			PageBean pageBean=new PageBean();
+			int pageSize = 10;//每页显示的记录数
+			int currentP = 1;//当前页面
+			int totalCount = adminDao.getUserTotalRecords();//表中的记录数
+			int pageCount = pageBean.getTotalPages(totalCount, pageSize);
+			//获得分页条上的当前页码
+			String pStr = request.getParameter("curPage");
+			if (pStr == null)
+				pStr = "1";
+			currentP = Integer.parseInt(pStr);
+			//如果当前页大于总的页面数，当前页面赋值为总的页面数
+			if (currentP > pageCount)
+				currentP = pageCount;
+			//如果当前页小于0 重置为第一页
+			if (currentP < 0)
+				currentP = 1;
+			//分页查询，mysql的分页查询关键字是limit,注意limit后面有空格
+			List<User> uList = null;
+			try {
+				uList = adminDao.getUserByPage(currentP, pageSize);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			request.setAttribute("uList", uList);
+			request.setAttribute("currentP", currentP);
+			request.setAttribute("pageCount", pageCount);
 			request.getRequestDispatcher("admin/UserAdmin.jsp").forward(request, response);
 		}else if(action.equals("InvitationAdmin")){	
-			
+			request.setCharacterEncoding("utf-8");
+			PageBean pageBean=new PageBean();
+			int pageSize = 10;//每页显示的记录数
+			int currentP = 1;//当前页面
+			int totalCount = adminDao.getTotalRecords();//表中的记录数
+			int pageCount = pageBean.getTotalPages(totalCount, pageSize);
+			//获得分页条上的当前页码
+			String pStr = request.getParameter("curPage");
+			if (pStr == null)
+				pStr = "1";
+			currentP = Integer.parseInt(pStr);
+			//如果当前页大于总的页面数，当前页面赋值为总的页面数
+			if (currentP > pageCount)
+				currentP = pageCount;
+			//如果当前页小于0 重置为第一页
+			if (currentP < 0)
+				currentP = 1;
+			//分页查询，mysql的分页查询关键字是limit,注意limit后面有空格
+			List<Invitation> invitation = null;
+			try {
+				invitation = adminDao.getInvitationByPage(currentP, pageSize);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			request.setAttribute("invitation", invitation);
+			request.setAttribute("currentP", currentP);
+			request.setAttribute("pageCount", pageCount);
 			request.getRequestDispatcher("admin/InvitationAdmin.jsp").forward(request, response);
+		}else if(action.equals("deleteInvitation")){		
+			String id = request.getParameter("id");
+			System.out.println("id"+id);
+			try{
+				con=dbUtil.getCon();
+				int delNums=adminDao.deleteInvitation(con, id);
+				if(delNums>0){
+					request.setAttribute("deleSuccMsg", "删除成功！");
+					request.getRequestDispatcher("admin.html?action=InvitationAdmin").forward(request, response);
+				}else{
+					request.setAttribute("deleErrorMsg", "删除失败！");
+					request.getRequestDispatcher("admin.html?action=InvitationAdmin").forward(request, response);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally{
+				try {
+					dbUtil.closeCon(con);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}else if(action.equals("deleteUser")){		
+			String id = request.getParameter("id");
+			System.out.println("id"+id);
+			try{
+				con=dbUtil.getCon();
+				int delNums=adminDao.deleteUser(con, id);
+				if(delNums>0){
+					request.setAttribute("deleSuccMsg", "删除成功！");
+					request.getRequestDispatcher("admin.html?action=useradmin").forward(request, response);
+				}else{
+					request.setAttribute("deleErrorMsg", "删除失败！");
+					request.getRequestDispatcher("admin.html?action=useradmin").forward(request, response);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally{
+				try {
+					dbUtil.closeCon(con);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}else if(action.equals("goodInvitation")){		
+			String id = request.getParameter("id");
+			System.out.println("id"+id);
+			try{
+				con=dbUtil.getCon();
+				int updateNums=adminDao.updateGood(con, id);
+				if(updateNums>0){
+					request.setAttribute("updateSuccMsg", "设置精华成功！");
+					request.getRequestDispatcher("admin.html?action=InvitationAdmin").forward(request, response);
+				}else{
+					request.setAttribute("updateErrorMsg", "设置精华失败！");
+					request.getRequestDispatcher("admin.html?action=InvitationAdmin").forward(request, response);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally{
+				try {
+					dbUtil.closeCon(con);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
