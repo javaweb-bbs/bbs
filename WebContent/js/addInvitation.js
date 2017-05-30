@@ -17,8 +17,8 @@ window.onload = function () {
         if (hasType) {
             for (var i = 0; i < data.length; i++) {
                 var option = document.createElement('option')
-                option.setAttribute("value", data[i])
-                option.innerHTML = data[i]
+                option.setAttribute("value", data[i].name)
+                option.innerHTML = data[i].name
                 subject.appendChild(option)
             }
         } else {

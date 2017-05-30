@@ -42,6 +42,7 @@ public class InvitationDao {
             }
         }
         search += "limit ?,?";
+        System.out.println("search is " + search);
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(search);
@@ -125,6 +126,32 @@ public class InvitationDao {
                 result.put("status", "Fail");
             } else {
                 result.put("status", "OK");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ps.close();
+            new DbUtil().closeCon(con);
+        }
+        return result;
+    }
+
+    // 更改帖子信息
+    public static JSONObject updateInfo(Connection con, Invitation invitation) throws Exception {
+        JSONObject result = new JSONObject();
+        String updateMes = "update invitation set title = ?, type = ?, content = ? where invitation_id = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(updateMes);
+            ps.setString((int) 1, invitation.getTitle());
+            ps.setString((int) 2, invitation.getType());
+            ps.setString((int) 3, invitation.getContent());
+            ps.setInt((int) 4, invitation.getInvitationId());
+            int num = ps.executeUpdate();
+            if (num == 0) {
+                result.put("status", "update fail");
+            } else {
+                result.put("status", "update success");
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -7,6 +7,7 @@ window.onload = function () {
     var nextBtn = document.querySelector('.next')
     var prevBtn = document.querySelector('.previous')
     var invitationList = document.querySelector('.invitation-list')
+    var user = JSON.parse(localStorage.getItem('user'))
     function getList(data) {
         data = JSON.parse(data)
         invitationList.innerHTML = ''
@@ -19,7 +20,8 @@ window.onload = function () {
                     + '</a></td><td>' + invitations[i].type + '</td>'
                     + '<td>' + invitations[i].content + '</td>'
                     + '<td>' + invitations[i].dateCreate + '</td>'
-                    + '<td><a><i class="glyphicon glyphicon-pencil"></i></a>'
+                    + '<td><a href="UpdateInvitation.jsp?invitationId=' + invitations[i].invitationId + '">'
+                    + '<i class="glyphicon glyphicon-pencil"></i></a>'
                     + '<a><i class="glyphicon glyphicon-remove"></i></a></td>'
                 listItem.innerHTML = html
                 invitationList.appendChild(listItem)
@@ -28,7 +30,7 @@ window.onload = function () {
     }
 
     function init() {
-        ajax("GET", "/invitation", null, getList)
+        ajax("GET", "invitation?user_id=" + user.userId, null, getList)
     }
 
     function nextPage() {
@@ -36,7 +38,7 @@ window.onload = function () {
             alert("当前已是最后一页")
         } else {
             currentPage += 1
-            ajax("GET", "invitation?pageNum=" + currentPage, null, getList)
+            ajax("GET", "invitation?user_id=" + user.userId + "&pageNum=" + currentPage, null, getList)
         }
     }
 
@@ -46,7 +48,7 @@ window.onload = function () {
         } else {
             console.log(currentPage)
             currentPage -= 1
-            ajax("GET", "invitation?pageNum=" + currentPage, null, getList)
+            ajax("GET", "invitation?user_id=" + user.userId + "&pageNum=" + currentPage, null, getList)
         }
     }
 

@@ -5,7 +5,6 @@ import bbs.model.Invitation;
 import bbs.util.DbUtil;
 import bbs.util.Stringutil;
 import bbs.util.getParams;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -76,6 +75,15 @@ public class invitationService extends HttpServlet {
             if (params.getString("action").equals("search")) {
                 String title = params.getString("title");
                 JSONObject result = InvitationDao.search(con, title);
+                PrintWriter out = res.getWriter();
+                out.print(result);
+            } else if (params.getString("action").equals("info")) {
+                Invitation invitation = new Invitation();
+                invitation.setInvitationId(params.getInt("invitationId"));
+                invitation.setTitle(params.getString("title"));
+                invitation.setType(params.getString("type"));
+                invitation.setContent(params.getString("content"));
+                JSONObject result = InvitationDao.updateInfo(con, invitation);
                 PrintWriter out = res.getWriter();
                 out.print(result);
             } else {
