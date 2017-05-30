@@ -15,13 +15,17 @@ import java.sql.SQLException;
 public class typeDao {
     public static JSONArray list(Connection con) throws Exception {
         JSONArray result = new JSONArray();
-        String search = "select * from invitation_type";
+        String search = "select invitation_type.name,count(invitation_id) as total from invitation_type left join invitation on " +
+                "invitation.type=invitation_type.name group by invitation_type.name";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(search);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                result.put(rs.getString("name"));
+                JSONObject typeItem = new JSONObject();
+                typeItem.put("name", rs.getString("name"));
+                typeItem.put("count", rs.getInt("total"));
+                result.put(typeItem);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -42,7 +46,7 @@ public class typeDao {
             int num = ps.executeUpdate();
 
             if (num == 0) {
-                result.put("status", "add failer");
+                result.put("status", "add fail");
             } else {
                 result.put("status", "add success");
             }

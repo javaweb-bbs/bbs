@@ -57,8 +57,9 @@ window.onload = function () {
         var hasType = data.length
         if (hasType) {
             for (var i = 0; i < data.length; i++) {
+                console.log(data[i].name)
                 var li = document.createElement('li')
-                var html = '<a href="#">' + data[i] + '</a>'
+                var html = '<a href="#">' + data[i].name + '</a>'
                 li.innerHTML = html
                 typeList.appendChild(li)
             }

@@ -21,10 +21,6 @@ window.onload = function () {
                 option.innerHTML = data[i]
                 subject.appendChild(option)
             }
-            var option = document.createElement('option')
-            option.setAttribute("value", 'test')
-            option.innerHTML = 'test'
-            subject.appendChild(option)
         } else {
             subject.innerHTML = '<option>暂无分类</option>'
         }
