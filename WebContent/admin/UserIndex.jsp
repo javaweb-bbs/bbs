@@ -2,6 +2,7 @@
 
 <%
 	User admin = (User) request.getSession().getAttribute("admin");
+	int totalTypeCount = (Integer)request.getAttribute("totalTypeCount");
 	int totalUserCount = (Integer)request.getAttribute("totalUserCount");
 	int totalInvitationCount = (Integer)request.getAttribute("totalInvitationCount");
 	int totalCommentCount = (Integer)request.getAttribute("totalCommentCount");
@@ -49,7 +50,7 @@
             </ol>
             
           <div class="row">
-	        <!-- <div class="col-lg-3">
+	        <div class="col-lg-3">
 	            <div class="panel panel-info">
 	              <div class="panel-heading">
 	                <div class="row">
@@ -57,13 +58,13 @@
 	                    <i class="glyphicon glyphicon-search"></i>
 	                  </div>
 	                  <div class="col-xs-6 text-right">
-	                    <p class="announcement-heading"></p>
-	                    <p class="announcement-text">网站来访人数</p>
+	                    <p class="announcement-heading"><%=totalTypeCount %></p>
+	                    <p class="announcement-text">分类总数</p>
 	                  </div>
 	                </div>
 	              </div>
 	            </div>
-            </div> -->
+            </div>
             
             <div class="col-lg-3" >
 	            <div class="panel panel-success">

@@ -1,8 +1,4 @@
 <%@ page language="java" import="java.util.*" import="bbs.model.*" pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
 
 <%
 	User admin = (User) request.getSession().getAttribute("admin");
@@ -31,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li class="active"><a href="${pageContent.request.contentPath }admin.html?action=index" target="_block"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a></li>
             <li><a href="${pageContent.request.contentPath }admin.html?action=useradmin"><i class="glyphicon glyphicon-cog"></i> 用户管理</a></li>
             <li><a href="${pageContent.request.contentPath }admin.html?action=InvitationAdmin"><i class="glyphicon glyphicon-cog"></i> 帖子管理</a></li>
-            <!-- <li><a href=""><i class="glyphicon glyphicon-edit"></i> 分类管理</a></li> -->
+            <li><a href="${pageContent.request.contentPath }admin.html?action=TypeAdmin"><i class="glyphicon glyphicon-edit"></i> 分类管理</a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
