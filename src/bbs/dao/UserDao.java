@@ -85,10 +85,10 @@ public class UserDao {
 			ps.setString((int) 3, user.getEmail());
 			int num = ps.executeUpdate();
 			if (num == 0) {
+				result.put("status", "register fail");
+			} else {
 				User userInfo = newUser(con, user.getUserName(), user.getPassWord());
 				result = new JSONObject(userInfo);
-			} else {
-				result.put("status", "register fail");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -106,6 +106,8 @@ public class UserDao {
 		PreparedStatement ps = null;
 		try {
 			ps = con.prepareStatement(search);
+			ps.setString((int) 1, username);
+			ps.setString((int) 2, password);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				result.setUserId(rs.getInt("user_id"));

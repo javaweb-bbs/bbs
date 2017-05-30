@@ -12,9 +12,6 @@ import="bbs.dao.*" pageEncoding="UTF-8"%>
 		              <li class="active">新建帖子</li>
 		            </ol>
 	            </div>
-	            
-	            <form class="form-horizontal" name="add_artical_form">
-	            	
 	                <div class="col-md-6">
 	                    <div class="form-group">
 	                    <label for="title">标题</label>
@@ -36,7 +33,6 @@ import="bbs.dao.*" pageEncoding="UTF-8"%>
 	                    <button id="contact-submit" type="submit" class="btn btn-primary input-medium pull-right">保存</button>
 	                </div>
 	                </div>
-	            </form>
 	        </div>
 		</div>
 	</div>
