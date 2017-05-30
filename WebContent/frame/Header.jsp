@@ -27,7 +27,7 @@
               <li class="divider"></li>
               <li><a href="TypeManage.jsp"><i class="glyphicon glyphicon-cog"></i> 分类管理</a></li>
               <li class="divider"></li>
-              <li><a href="CommentManage.jsp"><i class="glyphicon glyphicon-cog"></i> 评论管理</a></li>
+              <!-- <li><a href="CommentManage.jsp"><i class="glyphicon glyphicon-cog"></i> 评论管理</a></li> -->
             </ul>
         </ul>
         <ul class="nav navbar-nav navbar-right no-login">
