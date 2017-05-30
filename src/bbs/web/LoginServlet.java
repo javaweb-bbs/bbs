@@ -82,7 +82,7 @@ public class LoginServlet extends HttpServlet{
 			int sex_i=0;
 			if(sex.equals("男")) {
 				sex_i = 1;
-			} else if(sex.equals("女")) {
+			}else if(sex.equals("女")) {
 				sex_i=2;
 			} else if(sex.equals("")||sex==null) {
 				sex_i=1;

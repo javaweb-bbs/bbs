@@ -18,4 +18,13 @@ public class Stringutil {
 			return false;
 		}
 	}
+	public static String arrToString(String[] arr) {
+		String result = "";
+		if (arr.length != 0) {
+			for (int i = 0; i < arr.length; i++) {
+				result += arr[i];
+			}
+		}
+		return result;
+	}
 }

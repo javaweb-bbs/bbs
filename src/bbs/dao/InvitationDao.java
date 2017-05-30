@@ -9,23 +9,47 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by sjf on 5/24/17.
  */
 public class InvitationDao {
     // 获取帖子列表
-    public static JSONObject list (Connection con, int pageNum, int pageSize) throws Exception {
+    public static JSONObject list (Connection con, JSONObject filter) throws Exception {
         JSONObject result = new JSONObject();
         JSONArray invitations = new JSONArray();
         String search = "select *, username, (select count(*) from invitation) as total from invitation,user where" +
-                        " user.user_id = invitation.author limit ?,?";
+                        " user.user_id = invitation.author ";
+        ArrayList<String> filterValues = new ArrayList<>();
         int count = 0;
+        int filterCount = 0;
+        int pageNum = 1;
+        int pageSize = 10;
+        if (filter != null) {
+            pageNum = Integer.parseInt(filter.getString("pageNum"));
+            pageSize = Integer.parseInt(filter.getString("pageSize"));
+            filter.remove("pageSize");
+            filter.remove("pageNum");
+            Iterator<String> iterator = filter.keys();
+            while (iterator.hasNext()) {
+                filterCount++;
+                String key = iterator.next();
+                String value = filter.getString(key);
+                search += "and " + key + "= ?";
+                filterValues.add(value);
+            }
+        }
+        search += "limit ?,?";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(search);
-            ps.setInt((int) 1, (pageNum - 1) * pageSize);
-            ps.setInt((int) 2, pageSize);
+            for (int i = 0; i < filterCount; i++) {
+                ps.setString((int) i + 1, filterValues.get(i));
+            }
+            ps.setInt((int) filterCount + 1, (pageNum - 1) * pageSize);
+            ps.setInt((int) filterCount + 2, pageSize);
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -44,7 +68,6 @@ public class InvitationDao {
                 invitations.put(new JSONObject(resultInvitation));
                 count++;
             }
-            System.out.println("invitations is " + invitations);
             result.put("invitations", invitations);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -161,26 +184,36 @@ public class InvitationDao {
         return result;
     }
 
-    public static JSONArray search(Connection con, String title) throws Exception {
-        JSONArray result = new JSONArray();
-        String search = "select *, username from invitation, user where user.user_id = invitation.author and invitation.title like ?";
+    public static JSONObject search(Connection con, String title) throws Exception {
+        JSONObject result = new JSONObject();
+        String search = "select *, username,(select count(*) from invitation where title like ?) as total from invitation, user " +
+                "where user.user_id = invitation.author and invitation.title like ?";
         PreparedStatement ps = null;
+        int count = 0;
         try {
             ps = con.prepareStatement(search);
-            ps.setString((int) 1, title);
+            ps.setString((int) 1, "%" + title + "%");
+            ps.setString((int) 2, "%" + title + "%");
             ResultSet rs = ps.executeQuery();
+            JSONArray invitations = new JSONArray();
+            result.put("total", 0);
             while (rs.next()) {
-               Invitation invitation = new Invitation();
-                invitation.setAuthor(rs.getInt("author"));
-                invitation.setInvitationId(rs.getInt("invitation_id"));
-                invitation.setTitle(rs.getString("title"));
-                invitation.setContent(rs.getString("content"));
-                invitation.setType(rs.getString("type"));
-                invitation.setEssence(rs.getBoolean("is_essence"));
-                invitation.setDateCreate(rs.getDate("date_create"));
-                invitation.setAuthorName(rs.getString("username"));
-                result.put(new JSONObject(invitation));
+                Invitation searchInvitation = new Invitation();
+                searchInvitation.setAuthor(rs.getInt("author"));
+                searchInvitation.setInvitationId(rs.getInt("invitation_id"));
+                searchInvitation.setTitle(rs.getString("title"));
+                searchInvitation.setContent(rs.getString("content"));
+                searchInvitation.setType(rs.getString("type"));
+                searchInvitation.setEssence(rs.getBoolean("is_essence"));
+                searchInvitation.setDateCreate(rs.getDate("date_create"));
+                searchInvitation.setAuthorName(rs.getString("username"));
+                invitations.put(new JSONObject(searchInvitation));
+                if (count == 0) {
+                    result.put("total", rs.getInt("total"));
+                }
+                count++;
             }
+            result.put("invitations", invitations);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

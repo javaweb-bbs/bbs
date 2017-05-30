@@ -6,6 +6,9 @@ window.onload = function () {
     var currentPage = 1
     var nextBtn = document.querySelector('.next')
     var prevBtn = document.querySelector('.previous')
+
+    var searchInvitation = document.querySelector('.search-invitation')
+    var searchBtn = document.querySelector('.search-btn')
     function renderList(data) {
         var list = document.querySelector('.list')
         list.innerHTML = ''
@@ -23,6 +26,28 @@ window.onload = function () {
                 listItem.innerHTML = html
                 list.appendChild(listItem)
             }
+        }
+    }
+
+    searchInvitation.onkeydown = function (event) {
+        var searchMes = searchInvitation.value
+        if (event.keyCode == '13' && searchMes) {
+            var message = {
+                action: 'search',
+                title: searchMes
+            }
+            ajax("POST", "invitation", JSON.stringify(message), renderList)
+        }
+    }
+
+    searchBtn.onclick = function () {
+        var searchMes = searchInvitation.value
+        if (searchMes) {
+            var message = {
+                action: 'search',
+                title: searchMes
+            }
+            ajax("POST", "invitation", JSON.stringify(message), renderList)
         }
     }
 

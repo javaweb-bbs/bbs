@@ -47,7 +47,7 @@ public class commentService extends HttpServlet {
             Connection con = util.getCon();
             JSONObject params = getParams.get(req);
             Comment comment = new Comment();
-            comment.setAnswerUser(params.getInt("answerUser"));
+            comment.setAnswerUser(params.getInt("commentUser"));
             comment.setInvitation(params.getInt("invitation"));
             comment.setContent(params.getString("content"));
             comment.setAnswerUser(params.getInt("answerUser"));
