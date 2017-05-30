@@ -59,7 +59,7 @@ public class UserDao {
 				info.setEmail(rs.getString("email"));
 				info.setSex(rs.getInt("sex"));
 				info.setIsAdmin(rs.getBoolean("is_admin"));
-				result = new JSONObject(user);
+				result = new JSONObject(info);
 			} else {
 				result.put("status", "user is not existed");
 			}
