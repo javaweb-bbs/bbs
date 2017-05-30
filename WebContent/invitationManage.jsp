@@ -1,7 +1,5 @@
 <%@ page language="java" import="java.util.*" import="bbs.model.*"
 	import="bbs.dao.*" pageEncoding="UTF-8"%>
-
-
 <jsp:include page="frame/Header.jsp"></jsp:include>
 	<div class="container">
 		<div class="btn-toolbar">
@@ -30,5 +28,5 @@
 	</div>
 	<script src="js/ajax.js"></script>
 	<script src="js/invitationManage.js"></script>
-</body>
 <jsp:include page="frame/Footer.jsp"></jsp:include>
+</body>

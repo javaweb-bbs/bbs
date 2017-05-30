@@ -22,9 +22,15 @@ window.onload = function () {
                     + '<td>' + invitations[i].dateCreate + '</td>'
                     + '<td><a href="UpdateInvitation.jsp?invitationId=' + invitations[i].invitationId + '">'
                     + '<i class="glyphicon glyphicon-pencil"></i></a>'
-                    + '<a><i class="glyphicon glyphicon-remove"></i></a></td>'
+                    + '<a class="delete" id="' + invitations[i].invitationId +'"><i class="glyphicon glyphicon-remove" id="' + invitations[i].invitationId +'"></i></a></td>'
                 listItem.innerHTML = html
                 invitationList.appendChild(listItem)
+                listItem.querySelector('.delete').onclick = function (event) {
+                    if (event.target.classList.contains('delete') || event.target.classList.contains('glyphicon-remove')) {
+                        var id = +event.target.getAttribute('id')
+                        deleteInvitation(id)
+                    }
+                }
             }
         }
     }
@@ -50,6 +56,20 @@ window.onload = function () {
             currentPage -= 1
             ajax("GET", "invitation?user_id=" + user.userId + "&pageNum=" + currentPage, null, getList)
         }
+    }
+
+    function deleteCb(data) {
+        data = JSON.parse(data)
+        if (data.status === 'delete success') {
+            ajax("GET", "invitation?user_id=" + user.userId, null, getList)
+        } else {
+            alert('删除失败')
+        }
+    }
+
+    function deleteInvitation(invitationId) {
+        console.log('delete')
+        ajax('DELETE', 'invitation', JSON.stringify({invitationId: invitationId}), deleteCb)
     }
 
     nextBtn.onclick = function () {
