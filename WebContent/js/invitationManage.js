@@ -15,8 +15,8 @@ window.onload = function () {
             var invitations = data.invitations
             for (var i = 0; i < invitations.length; i++) {
                 var listItem = document.createElement('tr')
-                var html = '<td><a href="" target="_blank">' +invitations[i].title + '</a></td>'
-                    + '<td>' + invitations[i].type + '</td>'
+                var html = '<td><a href="Post.jsp?invitationId=' + invitations[i].invitationId + '" target="_blank">' +invitations[i].title
+                    + '</a></td><td>' + invitations[i].type + '</td>'
                     + '<td>' + invitations[i].content + '</td>'
                     + '<td>' + invitations[i].dateCreate + '</td>'
                     + '<td><a><i class="glyphicon glyphicon-pencil"></i></a>'

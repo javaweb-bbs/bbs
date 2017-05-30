@@ -50,12 +50,11 @@ window.onload = function () {
     contactBtn.onclick = function () {
         var content = document.querySelector('#message').value
         var title = document.querySelector('#name').value
-        var userId = document.querySelector('#user-id').value
-        console.log(userId)
+        var user = JSON.parse(localStorage.getItem('user'))
         if (content && title) {
             invitationMes.content = content
             invitationMes.title = title
-            invitationMes.author = +userId
+            invitationMes.author = +user.userId
             ajax("PUT", "invitation", JSON.stringify(invitationMes), addCb)
         } else {
             alert("帖子内容和标题为必填")
