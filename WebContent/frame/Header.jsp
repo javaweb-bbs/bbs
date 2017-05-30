@@ -38,7 +38,7 @@
           <ul class="nav pull-right">
             <li class="dropdown"><a href="#" class="dropdown-toggle username" data-toggle="dropdown"></a>
               <ul class="dropdown-menu">
-                <li><a href=""><i class="glyphicon glyphicon-cog"></i> 编辑个人信息</a></li>
+                <li><a href="Profile.jsp"><i class="glyphicon glyphicon-cog"></i> 编辑个人信息</a></li>
                 <li class="divider"></li>
                 <li class="login-out"><a><i class="glyphicon glyphicon-off"></i> 登出</a></li>
               </ul>

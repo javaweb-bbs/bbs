@@ -126,7 +126,7 @@ public class UserDao {
 	// 更改用户信息
 	public static JSONObject updateUser(Connection con,User user) throws Exception {
 		JSONObject result = new JSONObject();
-		String updateMes = "upadte user set email = ?, sex = ?, where user_id = ?";
+		String updateMes = "update user set email = ?, sex = ? where user_id = ?";
 		PreparedStatement ps = null;
 		try {
 			ps = con.prepareStatement(updateMes);
@@ -135,9 +135,9 @@ public class UserDao {
 			ps.setInt((int) 3, user.getUserId());
 			int num = ps.executeUpdate();
 			if (num == 0) {
-				result.put("status", "update success");
-			} else {
 				result.put("status", "update fail");
+			} else {
+				result.put("status", "update success");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -151,17 +151,17 @@ public class UserDao {
 	// 更改密码
 	public static JSONObject updatePassword(Connection con,User user) throws Exception {
 		JSONObject result = new JSONObject();
-		String updateMes = "upadte user set password = ? where user_id = ?";
+		String updateMes = "update user set password = ? where user_id = ?";
 		PreparedStatement ps = null;
 		try {
 			ps = con.prepareStatement(updateMes);
 			ps.setString((int) 1, user.getPassWord());
-			ps.setInt((int) 3, user.getUserId());
+			ps.setInt((int) 2, user.getUserId());
 			int num = ps.executeUpdate();
 			if (num == 0) {
-				result.put("status", "update password success");
-			} else {
 				result.put("status", "update password fail");
+			} else {
+				result.put("status", "update password success");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
