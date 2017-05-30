@@ -281,11 +281,10 @@ public class AdminDao {
 	}
 	
 	//类别更新
-	public int updateType(Connection con,Type type)throws Exception{
-		String sql="UPDATE invitation_type SET name=? WHERE name=?";
+	public int updateType(Connection con,String newname,String oldname)throws Exception{
+		String sql="UPDATE invitation_type SET name=? WHERE name='"+oldname+"'";
 		PreparedStatement pstmt=con.prepareStatement(sql);
-		pstmt.setString(1,type.getName());
-		pstmt.setString(2,type.getName());
+		pstmt.setString(1,newname);
 		return pstmt.executeUpdate();
 	}
 }

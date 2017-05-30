@@ -272,11 +272,11 @@ public class AdminServlet extends HttpServlet {
 				}
 			}
 		}else if(action.equals("SaveEditTypeAdmin")){
-			String name = request.getParameter("name");
-			Type t=new Type(name);
+			String newname = request.getParameter("scgName");
+			String oldname = request.getParameter("name");
 			try {
 				con = dbUtil.getCon();
-				int updateNums = adminDao.updateType(con, t);
+				int updateNums = adminDao.updateType(con, newname,oldname);
 				if (updateNums > 0) {
 					request.setAttribute("msg", "修改成功！");
 					request.getRequestDispatcher("admin.html?action=TypeAdmin").forward(request, response);
@@ -293,7 +293,6 @@ public class AdminServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
-			request.getRequestDispatcher("admin/AddTypeAdmin.jsp").forward(request, response);
 		}else if(action.equals("updateType")){
 			request.setCharacterEncoding("utf-8");
 			String name=request.getParameter("name");
