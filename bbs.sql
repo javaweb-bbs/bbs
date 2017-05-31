@@ -18,18 +18,18 @@
 --
 -- Table structure for table `comment`
 --
-USE bbs;
+
 DROP TABLE IF EXISTS `comment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `comment` (
-  `comment_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `comment_user` BIGINT(20) NOT NULL,
-  `invitation` BIGINT(20) NOT NULL,
-  `answer_user` BIGINT(20) NOT NULL,
-  `content` VARCHAR(100) NOT NULL,
+  `comment_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `comment_user` bigint(20) DEFAULT NULL,
+  `invitation` bigint(20) NOT NULL,
+  `answer_user` bigint(20) NOT NULL,
+  `content` varchar(100) NOT NULL,
   PRIMARY KEY (`comment_id`)
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +38,7 @@ CREATE TABLE `comment` (
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
+INSERT INTO `comment` VALUES (1,0,2,1,'eqeqw'),(2,0,2,1,'eqeqw'),(3,0,2,1,'dadada'),(4,0,3,1,'dadada'),(5,0,3,1,'dadada'),(6,0,3,1,'dadada'),(7,0,3,1,'dadadafsfsfsfsfsf'),(11,0,2,1,'yrytrty'),(12,0,5,5,'sadas');
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -49,14 +50,15 @@ DROP TABLE IF EXISTS `invitation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `invitation` (
-  `invitation_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `author` BIGINT(20) NOT NULL,
-  `title` VARCHAR(100) NOT NULL,
-  `is_essence` TINYINT(1) NOT NULL DEFAULT '0',
-  `type` VARCHAR(20) NOT NULL DEFAULT 'skill',
-  `content` VARCHAR(200) DEFAULT NULL,
+  `invitation_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `author` bigint(20) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `is_essence` tinyint(1) NOT NULL DEFAULT '1',
+  `type` varchar(20) NOT NULL DEFAULT 'skill',
+  `content` varchar(200) DEFAULT NULL,
+  `date_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`invitation_id`)
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,6 +67,7 @@ CREATE TABLE `invitation` (
 
 LOCK TABLES `invitation` WRITE;
 /*!40000 ALTER TABLE `invitation` DISABLE KEYS */;
+INSERT INTO `invitation` VALUES (2,2,'test',0,'skill','this is wangkai','2017-05-25 03:49:13'),(3,1,'sujunfei',1,'test','this is sujunfei','2017-05-25 03:49:27'),(5,1,'test',0,'skill','sujunfei','2017-05-26 03:35:49'),(6,1,'rwer',0,'skill','rwerw','2017-05-30 03:29:50'),(8,1,'rqwrew',0,'test','rwqerwerwq','2017-05-30 08:54:22');
 /*!40000 ALTER TABLE `invitation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -76,10 +79,10 @@ DROP TABLE IF EXISTS `invitation_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `invitation_type` (
-  `name` VARCHAR(20) NOT NULL,
+  `name` varchar(20) NOT NULL,
   PRIMARY KEY (`name`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,7 +91,7 @@ CREATE TABLE `invitation_type` (
 
 LOCK TABLES `invitation_type` WRITE;
 /*!40000 ALTER TABLE `invitation_type` DISABLE KEYS */;
-INSERT INTO `invitation_type` VALUES ('skill');
+INSERT INTO `invitation_type` VALUES ('skill'),('test');
 /*!40000 ALTER TABLE `invitation_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,12 +103,14 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `user_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(20) NOT NULL,
-  `sex` TINYINT(4) NOT NULL,
-  `is_admin` TINYINT(1) DEFAULT '0',
+  `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) NOT NULL,
+  `sex` tinyint(1) NOT NULL DEFAULT '1',
+  `is_admin` tinyint(1) DEFAULT '0',
+  `password` varchar(11) NOT NULL,
+  `email` varchar(20) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=INNODB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,7 +119,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'苏俊飞',1,0);
+INSERT INTO `user` VALUES (1,'苏俊飞',1,0,'sjf978977','1982764150@qq.com'),(2,'王凯',1,0,'123456','123456@qq.com'),(3,'sujunfei',1,0,'123456','123456@qq.com'),(4,'SJF',1,0,'123','455'),(5,'dasda',1,0,'asd','dasd');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -127,4 +132,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-24 10:07:05
+-- Dump completed on 2017-05-31  9:04:13

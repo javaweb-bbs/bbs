@@ -35,9 +35,8 @@
           <div class="well">
             <h4>精华TOP10</h4>
             <div class="row">
-              <ul class="list-unstyled">
-                <li><a href="" target="_blank">c</a></li>
-                <li><a href="" target="_blank">c++</a></li>
+              <ul class="list-unstyled  essence-invitations">
+
               </ul>
             </div>
           </div>

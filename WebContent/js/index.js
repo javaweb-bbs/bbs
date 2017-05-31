@@ -51,13 +51,29 @@ window.onload = function () {
         }
     }
 
+    function getEssenceInvitation(data) {
+        var essenceInvitations = document.querySelector('.essence-invitations')
+        data = JSON.parse(data)
+        essenceInvitations.innerHTML = ''
+        if (data.total) {
+            for (var i = 0; i < data.total; i++) {
+                var invitation = data.invitations[i]
+                var listItem = document.createElement('li')
+                var html = '<a href="Post.jsp?invitationId=' + invitation.invitationId + '" target="_blank">' + invitation.title + '</a></li>'
+                listItem.innerHTML = html
+                essenceInvitations.appendChild(listItem)
+            }
+        } else {
+            essenceInvitations.innerHTML = '<li>暂无精华贴</li>'
+        }
+    }
+
     function renderType(data) {
         var typeList = document.querySelector('.type-list')
         data = JSON.parse(data)
         var hasType = data.length
         if (hasType) {
             for (var i = 0; i < data.length; i++) {
-                console.log(data[i].name)
                 var li = document.createElement('li')
                 var html = '<a href="#">' + data[i].name + '</a>'
                 li.innerHTML = html
@@ -97,6 +113,7 @@ window.onload = function () {
     function init() {
         ajax("GET", "invitation", null, renderList);
         ajax("GET", "type", null, renderType);
+        ajax('GET', "invitation?is_essence=true", null, getEssenceInvitation)
     }
 
     init();
